@@ -1,0 +1,29 @@
+# Terraform-generated directories and files
+.terraform/                  
+*.tfstate                    
+*.tfstate.*                  
+*.plan                       
+.terraform.lock.hcl        
+
+# Sensitive variables and override files
+*.tfvars                     
+*.tfvars.json                
+override.tf                  
+override.tf.json
+_override.tf
+_override.tf.json
+
+# VS Code editor config
+.vscode/                        
+
+# macOS system files
+.DS_Store 
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Log and crash/debug files
+crash.log                       
+*.log                           
+*.tmp                         
