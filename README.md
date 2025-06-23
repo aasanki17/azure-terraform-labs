@@ -44,6 +44,9 @@ Terraform/
 ├── 00-resource-group/        # Create a resource group
 │   ├── main.tf
 │   └── README.md
+├── 01-storage-account/       # Create a storage account
+│   ├── main.tf
+│   └── README.md
 ├── .gitignore
 └── README.md
 ```
