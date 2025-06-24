@@ -47,6 +47,9 @@ Terraform/
 ├── 01-storage-account/       # Create a storage account
 │   ├── main.tf
 │   └── README.md
+├── 02-container-and-blob/    # Create a container and blob
+│   ├── main.tf
+│   └── README.md
 ├── .gitignore
 └── README.md
 ```
