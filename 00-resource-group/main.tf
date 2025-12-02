@@ -1,8 +1,8 @@
-# Configure the Azure provider
+# Terraform Configuration for Azure Provider
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = "4.32.0"
     }
   }
@@ -10,15 +10,23 @@ terraform {
 
 # Authentication details
 provider "azurerm" {
-  features { }
+  features {}
+
+  # These values are specific to your Service Principal.
+  # Replace the placeholders only for this learning example.
   subscription_id = "YOUR_SUBSCRIPTION_ID"
   client_id       = "YOUR_CLIENT_ID"
   client_secret   = "YOUR_CLIENT_SECRET"
   tenant_id       = "YOUR_TENANT_ID"
 }
 
-# Create a Azure resource group
-resource "azurerm_resource_group" "resource-group" {
-  name     = "terraform-rg"
+# Create an Azure Resource Group
+resource "azurerm_resource_group" "resource_group" {
+  name     = "terraformrg"
   location = "West Europe"
+
+  tags = {
+    environment = "dev"
+    project     = "terraform-learning"
+  }
 }
