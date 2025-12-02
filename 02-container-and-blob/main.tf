@@ -1,8 +1,8 @@
-# Configure the Azure provider
+# Terraform Configuration for Azure Provider
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = "4.32.0"
     }
   }
@@ -10,41 +10,47 @@ terraform {
 
 # Authentication details
 provider "azurerm" {
-  features { }
+  features {}
   subscription_id = "YOUR_SUBSCRIPTION_ID"
   client_id       = "YOUR_CLIENT_ID"
   client_secret   = "YOUR_CLIENT_SECRET"
   tenant_id       = "YOUR_TENANT_ID"
 }
 
-# Create a Azure resource group
-resource "azurerm_resource_group" "resource-group" {
-  name     = "terraformrg2"
+# Create an Azure Resource Group
+resource "azurerm_resource_group" "resource_group" {
+  name     = "terraformrg"
   location = "West Europe"
+
 }
 
-# Create a Azure storage account
-resource "azurerm_storage_account" "storage-account" {
-  name                     = "terraformrgsa2"
-  resource_group_name      = "terraformrg2"
+# Create an Azure Storage Account
+resource "azurerm_storage_account" "storage_account" {
+  name                     = "terraformrgsa"
+  resource_group_name      = azurerm_resource_group.resource_group.name
   location                 = "West Europe"
   account_tier             = "Standard"
   account_replication_type = "GRS"
-  depends_on = [ azurerm_resource_group.resource-group ] # explicit dependency
+  depends_on               = [azurerm_resource_group.resource_group] # explicit dependency
+
+  tags = {
+    environment = "dev"
+    project     = "terraform-learning"
+  }
 }
 
-# Create a Azure container
+# Create an Azure Storage Container
 resource "azurerm_storage_container" "container" {
-  name                  = "terraformcontainer2"
-  storage_account_id    = azurerm_storage_account.storage-account.id # implicit dependency
+  name                  = "terraformcontainer"
+  storage_account_id    = azurerm_storage_account.storage_account.id # implicit dependency
   container_access_type = "private"
 }
 
-# Create a Azure storage blob
-resource "azurerm_storage_blob" "container-blob" {
-  name                   = "terraformcontainerblob2"
-  storage_account_name   = "terraformrgsa2"
-  storage_container_name = "terraformcontainer2"
+# Create an Azure Storage Blob
+resource "azurerm_storage_blob" "container_blob" {
+  name                   = "terraformcontainerblob"
+  storage_account_name   = azurerm_storage_account.storage_account.name
+  storage_container_name = azurerm_storage_container.container.name
   type                   = "Block"
-  source                 = "main.tf"
+  source                 = "main.tf" # Upload this file to the blob
 }
