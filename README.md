@@ -66,26 +66,32 @@ Run `terraform init`, `terraform plan`, and `terraform apply` inside that specif
 
 ```
 Terraform/
-├── 00-resource-group/                     # Create a resource group
+├── 00-resource-group/                      # Create a resource group
 │   ├── main.tf
 │   └── README.md
-├── 01-storage-account/                    # Create a storage account
+├── 01-storage-account/                     # Create a storage account
 │   ├── main.tf
 │   └── README.md
-├── 02-container-and-blob/                 # Create a container and blob
+├── 02-container-and-blob/                  # Create a container and blob
 │   ├── main.tf
 │   └── README.md
-├── 03-virtual-network-with-subnets/       # Create virtual network with subnets
+├── 03-virtual-network-with-subnets/        # Create virtual network with subnets
 │   ├── main.tf
 │   └── README.md
-├── 04-vnet-nic-nsg/                       # Create VNet, Subnet, NIC, Public IP, and NSG
+├── 04-vnet-nic-nsg/                        # Create VNet, Subnet, NIC, Public IP, and NSG
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── terraform.tfvars
+│   ├── main.tf
+│   └── README.md
+├── 05-windows-vm/                          # Deploy a Windows Virtual Machine
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 ├── .gitignore
-└── README.md                               # This file
+└── README.md                                # This file
 ```
 
 ## About Me
