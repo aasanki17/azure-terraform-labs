@@ -69,33 +69,40 @@ Terraform/
 ├── 00-resource-group/                                # Create a resource group
 │   ├── main.tf
 │   └── README.md
+│
 ├── 01-storage-account/                               # Create a storage account
 │   ├── main.tf
 │   └── README.md
+│
 ├── 02-container-and-blob/                            # Create a container and blob
 │   ├── main.tf
 │   └── README.md
+│
 ├── 03-virtual-network-with-subnets/                  # Create virtual network with subnets
 │   ├── main.tf
 │   └── README.md
+│
 ├── 04-vnet-nic-nsg/                                  # Create VNet, Subnet, NIC, Public IP, and NSG
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
+│
 ├── 05-windows-vm/                                    # Deploy a Windows Virtual Machine
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
+│
 ├── 06-vm-with-data-disk-and-availability-set/        # Add data disk and availability set to VM
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
+│
 ├── 07-custom-script-extension-with-sas/              # Use custom script extension with SAS-based blob access
 │   ├── provider.tf
 │   ├── variables.tf
@@ -103,8 +110,16 @@ Terraform/
 │   ├── main.tf
 │   ├── IIS_Config.ps1
 │   └── README.md
+│
+├── 08-key-vault-vm-password/                         # Store VM password securely in Azure Key Vault
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── terraform.tfvars
+│   ├── main.tf
+│   └── README.md
+│
 ├── .gitignore
-└── README.md                                          # This file
+└── README.md                                         # This file
 ```
 
 ## About Me
