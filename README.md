@@ -118,6 +118,13 @@ Terraform/
 │   ├── main.tf
 │   └── README.md
 │
+├── 09-vnet-peering/                                  # Configure VNet peering between two VNets
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── terraform.tfvars
+│   ├── main.tf
+│   └── README.md
+│
 ├── .gitignore
 └── README.md                                         # This file
 ```
