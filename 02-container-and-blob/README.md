@@ -16,7 +16,7 @@ Use Terraform to create a Storage Container and upload a Blob with explicit and 
   - `subscription_id` — Your Azure subscription ID
 - Assign the app registration the **Contributor** role for the subscription or resource group where I plan to deploy the resources.
 
-## - Deployment Steps
+## Deployment Steps
 
 Initialize Terraform:
 

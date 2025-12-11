@@ -18,7 +18,7 @@ This folder demonstrates the _manual authentication method_.
   - `subscription_id` — Your Azure subscription ID
 - Assign the app registration the **Contributor** role for the subscription or resource group where I plan to deploy the resources.
 
-## - Deployment Steps
+## Deployment Steps
 
 Initialize Terraform:
 

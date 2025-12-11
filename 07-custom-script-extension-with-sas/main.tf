@@ -180,3 +180,9 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
     commandToExecute = "powershell -ExecutionPolicy Unrestricted -File IIS_Config.ps1"
   })
 }
+
+# Output the Public IP of the Windows VM
+output "vm_public_ip_address" {
+  description = "Public IP of the Windows VM"
+  value       = azurerm_public_ip.public_ip.ip_address
+}

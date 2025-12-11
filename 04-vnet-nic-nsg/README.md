@@ -51,7 +51,7 @@ var_nsg_name             = "terraformnsg"
 
 Terraform will automatically detect and use this file if it's named terraform.tfvars.
 
-## - Deployment Steps
+## Deployment Steps
 
 Initialize Terraform:
 

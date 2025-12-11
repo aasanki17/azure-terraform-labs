@@ -57,7 +57,7 @@ var_admin_password         = "AzureVMpwd@123"
 
 Terraform will automatically detect and use this file if it's named terraform.tfvars.
 
-## - Deployment Steps
+## Deployment Steps
 
 Initialize Terraform:
 
