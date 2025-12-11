@@ -66,44 +66,44 @@ Run `terraform init`, `terraform plan`, and `terraform apply` inside that specif
 
 ```
 Terraform/
-├── 00-resource-group/                                  # Create a Resource Group
+├── 00-resource-group/                                   # Create a Resource Group
 │   ├── main.tf
 │   └── README.md
 │
-├── 01-storage-account/                                 # Create a Storage Account
+├── 01-storage-account/                                  # Create a Storage Account
 │   ├── main.tf
 │   └── README.md
 │
-├── 02-container-and-blob/                              # Create a Blob Container and upload a Blob
+├── 02-container-and-blob/                               # Create a Blob Container and upload a Blob
 │   ├── main.tf
 │   └── README.md
 │
-├── 03-virtual-network-with-subnets/                    # Create a Virtual Network with Subnets
+├── 03-virtual-network-with-subnets/                     # Create a Virtual Network with Subnets
 │   ├── main.tf
 │   └── README.md
 │
-├── 04-vnet-nic-nsg/                                    # Create VNet, Subnet, NIC, Public IP, and NSG
+├── 04-vnet-nic-nsg/                                     # Create VNet, Subnet, NIC, Public IP, and NSG
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 05-windows-vm/                                      # Deploy a Windows Virtual Machine
+├── 05-windows-vm/                                       # Deploy a Windows Virtual Machine
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 06-vm-with-data-disk-and-availability-set/          # Add Data Disk and Availability Set to VM
+├── 06-vm-with-data-disk-and-availability-set/           # Add Data Disk and Availability Set to a VM
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 07-custom-script-extension-with-sas/                # Install IIS using Custom Script Extension with SAS
+├── 07-custom-script-extension-with-sas/                 # Install IIS using Custom Script Extension and SAS Token
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
@@ -111,36 +111,44 @@ Terraform/
 │   ├── IIS_Config.ps1
 │   └── README.md
 │
-├── 08-key-vault-vm-password/                           # Store VM Password Securely in Azure Key Vault
+├── 08-key-vault-vm-password/                            # Store VM Password Securely in Azure Key Vault
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 09-vnet-peering/                                    # Configure Peering between Two VNets
+├── 09-vnet-peering/                                     # Configure Peering Between Two VNets
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 10-linux-vm-password-auth/                          # Deploy a Linux VM with Password Authentication
+├── 10-linux-vm-password-auth/                           # Deploy a Linux VM with Password Authentication
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 11-linux-vm-with-ssh/                               # Deploy a Linux VM using SSH Key Authentication
+├── 11-linux-vm-with-ssh/                                # Deploy a Linux VM with SSH Key Authentication
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
+│   └── README.md
+│
+├── 12-linux-vm-with-cloudinit/                          # Configure Linux VM at Boot Using cloud-init (NGINX Installation)
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── terraform.tfvars
+│   ├── main.tf
+│   ├── cloud-init.yaml
 │   └── README.md
 │
 ├── .gitignore
-└── README.md                                           # Root documentation for the repository
+└── README.md                                            # Root Documentation for the Repository
 ```
 
 ## About Me
