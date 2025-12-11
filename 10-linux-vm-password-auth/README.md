@@ -93,9 +93,10 @@ terraform destroy -var-file="terraform.tfvars"
 
 3. Verify SSH access from your Mac:
 
-   `ssh adminuser@<PUBLIC_IP>`
+```bash
+ssh <admin_username>@<public_ip>
+```
 
 4. Validate VM is reachable internally:
 
-   - Run uname -a
    - Run ping google.com (to verify outbound internet)
