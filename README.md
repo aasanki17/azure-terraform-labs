@@ -66,15 +66,15 @@ Run `terraform init`, `terraform plan`, and `terraform apply` inside that specif
 
 ```
 Terraform/
-├── 00-resource-group/                                   # Create a Resource Group
+├── 00-resource-group/                                   # Create an Azure Resource Group
 │   ├── main.tf
 │   └── README.md
 │
-├── 01-storage-account/                                  # Create a Storage Account
+├── 01-storage-account/                                  # Create an Azure Storage Account
 │   ├── main.tf
 │   └── README.md
 │
-├── 02-container-and-blob/                               # Create a Blob Container and upload a Blob
+├── 02-container-and-blob/                               # Create a Blob Container and Upload a Blob
 │   ├── main.tf
 │   └── README.md
 │
@@ -96,14 +96,14 @@ Terraform/
 │   ├── main.tf
 │   └── README.md
 │
-├── 06-vm-with-data-disk-and-availability-set/           # Add Data Disk and Availability Set to a VM
+├── 06-vm-with-data-disk-and-availability-set/           # Add a Data Disk and Availability Set to a VM
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 07-custom-script-extension-with-sas/                 # Install IIS using Custom Script Extension and SAS Token
+├── 07-custom-script-extension-with-sas/                 # Install IIS Using Custom Script Extension and SAS Token
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
@@ -118,33 +118,40 @@ Terraform/
 │   ├── main.tf
 │   └── README.md
 │
-├── 09-vnet-peering/                                     # Configure Peering Between Two VNets
+├── 09-vnet-peering/                                     # Configure VNet Peering Between Two VNets
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 10-linux-vm-password-auth/                           # Deploy a Linux VM with Password Authentication
+├── 10-linux-vm-password-auth/                           # Deploy a Linux VM Using Password Authentication
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 11-linux-vm-with-ssh/                                # Deploy a Linux VM with SSH Key Authentication
+├── 11-linux-vm-with-ssh/                                # Deploy a Linux VM Using SSH Key Authentication
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 12-linux-vm-with-cloudinit/                          # Configure Linux VM at Boot Using cloud-init (NGINX Installation)
+├── 12-linux-vm-with-cloudinit/                          # Configure a Linux VM at Boot Using cloud-init (NGINX)
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   ├── cloud-init.yaml
+│   └── README.md
+│
+├── 13-web-app-basic/                                    # Deploy a Basic Windows Azure Web App
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── terraform.tfvars
+│   ├── main.tf
 │   └── README.md
 │
 ├── .gitignore
