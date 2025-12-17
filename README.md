@@ -147,7 +147,14 @@ Terraform/
 │   ├── cloud-init.yaml
 │   └── README.md
 │
-├── 13-web-app-basic/                                    # Deploy a Basic Windows Azure Web App
+├── 13-web-app-basic/                                    # Deploy a Basic Azure Windows Web App
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── terraform.tfvars
+│   ├── main.tf
+│   └── README.md
+│
+├── 14-web-app-with-github-deploy/                       # Deploy a Web App with GitHub-based Continuous Deployment
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
