@@ -16,5 +16,5 @@ variable "var_service_plan_name" {
 
 variable "var_web_app_name" {
   type        = string
-  description = "Base name for the Azure Windows Web App (must be globally unique after suffix)"
+  description = "Base name for the Azure Windows Web App (a random suffix is added for global uniqueness)"
 }

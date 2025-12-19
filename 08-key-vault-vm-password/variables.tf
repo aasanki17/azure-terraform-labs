@@ -31,7 +31,7 @@ variable "var_nic_name" {
 
 variable "var_key_vault_name" {
   type        = string
-  description = "Base name of the Key Vault"
+  description = "Base name of the Key Vault (a random suffix is added for global uniqueness)"
 }
 
 variable "var_windows_vm_name" {

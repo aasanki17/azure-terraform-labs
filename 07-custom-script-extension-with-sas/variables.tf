@@ -11,7 +11,7 @@ variable "var_resource_group_name" {
 
 variable "var_storage_account_name" {
   type        = string
-  description = "Base name of the Storage Account  (a random suffix will be added)"
+  description = "Base name of the Storage Account (a random suffix is added for global uniqueness)"
 }
 
 variable "var_storage_container_name" {

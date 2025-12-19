@@ -49,7 +49,7 @@ var_nic_name             = "terraformnic"
 var_nsg_name             = "terraformnsg"
 var_linux_vm_name        = "terraformvm"
 var_admin_username       = "adminuser"
-var_admin_password       = "AzureVMpwd@123"
+var_admin_password       = "<YOUR_STRONG_PASSWORD>"
 ```
 
 Terraform will automatically detect and use this file if it's named terraform.tfvars.
