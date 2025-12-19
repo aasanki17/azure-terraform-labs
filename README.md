@@ -66,44 +66,44 @@ Run `terraform init`, `terraform plan`, and `terraform apply` inside that specif
 
 ```
 Terraform/
-├── 00-resource-group/                                   # Create an Azure Resource Group
+├── 00-resource-group/                         # Create an Azure Resource Group
 │   ├── main.tf
 │   └── README.md
 │
-├── 01-storage-account/                                  # Create an Azure Storage Account
+├── 01-storage-account/                        # Create an Azure Storage Account
 │   ├── main.tf
 │   └── README.md
 │
-├── 02-container-and-blob/                               # Create a Blob Container and Upload a Blob
+├── 02-container-and-blob/                     # Create a Blob Container and Upload a Blob
 │   ├── main.tf
 │   └── README.md
 │
-├── 03-virtual-network-with-subnets/                     # Create a Virtual Network with Subnets
+├── 03-virtual-network-with-subnets/           # Create a Virtual Network with Subnets
 │   ├── main.tf
 │   └── README.md
 │
-├── 04-vnet-nic-nsg/                                     # Create VNet, Subnet, NIC, Public IP, and NSG
+├── 04-vnet-nic-nsg/                           # Create VNet, Subnet, NIC, Public IP, and NSG
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 05-windows-vm/                                       # Deploy a Windows Virtual Machine
+├── 05-windows-vm/                             # Deploy a Windows Virtual Machine
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 06-vm-with-data-disk-and-availability-set/           # Add a Data Disk and Availability Set to a VM
+├── 06-vm-with-data-disk-and-availability-set/ # Add a Data Disk and Availability Set to a VM
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 07-custom-script-extension-with-sas/                 # Install IIS Using Custom Script Extension and SAS Token
+├── 07-custom-script-extension-with-sas/       # Install IIS Using Custom Script Extension and SAS Token
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
@@ -111,35 +111,35 @@ Terraform/
 │   ├── IIS_Config.ps1
 │   └── README.md
 │
-├── 08-key-vault-vm-password/                            # Store VM Password Securely in Azure Key Vault
+├── 08-key-vault-vm-password/                  # Store VM Password Securely in Azure Key Vault
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 09-vnet-peering/                                     # Configure VNet Peering Between Two VNets
+├── 09-vnet-peering/                           # Configure VNet Peering Between Two VNets
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 10-linux-vm-password-auth/                           # Deploy a Linux VM Using Password Authentication
+├── 10-linux-vm-password-auth/                 # Deploy a Linux VM Using Password Authentication
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 11-linux-vm-with-ssh/                                # Deploy a Linux VM Using SSH Key Authentication
+├── 11-linux-vm-with-ssh/                      # Deploy a Linux VM Using SSH Key Authentication
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 12-linux-vm-with-cloudinit/                          # Configure a Linux VM at Boot Using cloud-init (NGINX)
+├── 12-linux-vm-with-cloudinit/                # Configure a Linux VM at Boot Using cloud-init (NGINX)
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
@@ -147,14 +147,21 @@ Terraform/
 │   ├── cloud-init.yaml
 │   └── README.md
 │
-├── 13-web-app-basic/                                    # Deploy a Basic Azure Windows Web App
+├── 13-web-app-basic/                          # Deploy a Basic Azure Windows Web App
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
 │   ├── main.tf
 │   └── README.md
 │
-├── 14-web-app-with-github-deploy/                       # Deploy a Web App with GitHub-based Continuous Deployment
+├── 14-web-app-with-github-deploy/             # Deploy a Web App with GitHub-based Continuous Deployment
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── terraform.tfvars
+│   ├── main.tf
+│   └── README.md
+│
+├── 15-mssql-database/                         # Provision Azure SQL Server and Database with firewall rule
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars
@@ -162,7 +169,7 @@ Terraform/
 │   └── README.md
 │
 ├── .gitignore
-└── README.md                                            # Root Documentation for the Repository
+└── README.md                                  # Root Documentation for the Repository
 ```
 
 ## About Me
