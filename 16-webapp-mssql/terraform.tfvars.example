@@ -1,0 +1,19 @@
+var_location               = "West Europe"
+var_resource_group_name    = "terraformrg"
+var_storage_account_name   = "terraformsa"
+var_storage_container_name = "terraformcontainer"
+var_storage_blob_name      = "load-data.sql"
+
+var_mssql_server_name      = "terraformsqlserver"
+var_mssql_db_name          = "terraformsqldb"
+var_mssql_admin_username   = "sqladminuser"
+var_mssql_admin_password   = "Replace-With-Strong-Password"
+
+var_service_plan_name      = "terraformserviceplan"
+var_web_app_name           = "terraformwebapp"
+
+var_allowed_ip             =  "x.x.x.x"
+
+var_github_token           = "<YOUR_GITHUB_PAT>"
+var_github_repo_url        = "https://github.com/your-username/your-repo"
+var_github_branch          = "main"
