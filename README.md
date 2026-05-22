@@ -171,8 +171,9 @@ Terraform/
 ├── 16-webapp-mssql/                           # Web App executes a Blob-hosted SQL script to populate Azure SQL Database
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── outputs.tf
+│   ├── terraform.tfvars.example
 │   ├── load-data.sql
 │   ├── load-db.ps1
 │   └── README.md
@@ -180,10 +181,3 @@ Terraform/
 ├── .gitignore
 └── README.md                                  # Root Documentation for the Repository
 ```
-
-## About Me
-
-I’m Ankita Shrivastava, a beginner Cloud Engineer actively learning Azure and Terraform with a focus on Cloud Infrastructure and DevOps roles.
-This repository is a part of my hands-on Azure learning journey.
-
-Let’s connect on [LinkedIn](https://www.linkedin.com/in/ankita-shrivastava17/)!
