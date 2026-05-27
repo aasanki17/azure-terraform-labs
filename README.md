@@ -1,7 +1,8 @@
 # Terraform (Azure)
 
-This repository documents my learning journey with Terraform on Microsoft Azure.
-It contains fully working, **standalone Terraform projects**, each demonstrating a specific Azure service or IaC concept.
+This repository contains hands-on Terraform projects for deploying Microsoft Azure infrastructure.
+
+Each folder is a **standalone Terraform project** that demonstrates a specific Azure service or Infrastructure as Code concept.
 
 ## Tools
 
@@ -56,8 +57,16 @@ terraform -v
 | ------------------- | ---------------------------------------------------- |
 | `terraform init`    | Initialize a new or existing Terraform configuration |
 | `terraform plan`    | Show the execution plan before applying changes      |
-| `terraform apply`   | Applies the changes to reach the desired state       |
-| `terraform destroy` | Destroys the infrastructure managed by Terraform     |
+| `terraform apply`   | Apply the changes to reach the desired state         |
+| `terraform destroy` | Destroy the infrastructure managed by Terraform      |
+
+## Authentication Approach
+
+The first few folders show Service Principal authentication fields as placeholders for understanding the manual authentication setup.
+
+Later folders use Azure CLI authentication with `az login` for local Terraform development.
+
+No real credentials are committed in this repository.
 
 ## Repository Structure
 

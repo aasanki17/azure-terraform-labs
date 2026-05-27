@@ -1,10 +1,10 @@
-# 00 - Resource group
+# 00 - Resource Group
 
 ## Objective
 
-Create an Azure Resource Group using Terraform while learning how to authenticate with Azure using a **Service Principal (App Registration)**.
+Create an Azure Resource Group using Terraform and understand how **Service Principal authentication** works in Azure.
 
-This folder demonstrates the _manual authentication method_.
+This folder demonstrates the manual authentication method using placeholder provider values.
 
 ## Prerequisites
 
@@ -13,10 +13,16 @@ This folder demonstrates the _manual authentication method_.
 - Create an **App Registration** in Microsoft Entra ID (formerly Azure Active Directory).
 - Note down the following values from the Azure portal:
   - `client_id` — Application (client) ID
-  - `client_secret` - Client secret generated under **Certificates & Secrets**
+  - `client_secret` — Client secret generated under **Certificates & Secrets**
   - `tenant_id` — Directory (tenant) ID
   - `subscription_id` — Your Azure subscription ID
-- Assign the app registration the **Contributor** role for the subscription or resource group where I plan to deploy the resources.
+- Assign the app registration the Contributor role for the subscription or resource group where the resources will be deployed
+
+## Authentication Note
+
+The provider block uses placeholder values to show the Service Principal authentication fields.
+
+Real credentials should not be committed to GitHub. Later folders in this repository use Azure CLI authentication with `az login`.
 
 ## Deployment Steps
 

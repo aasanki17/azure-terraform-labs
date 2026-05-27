@@ -8,12 +8,10 @@ terraform {
   }
 }
 
-# Authentication details
+# Azure Provider Configuration
 provider "azurerm" {
   features {}
 
-  # These values are specific to your Service Principal.
-  # Replace the placeholders only for this learning example.
   subscription_id = "YOUR_SUBSCRIPTION_ID"
   client_id       = "YOUR_CLIENT_ID"
   client_secret   = "YOUR_CLIENT_SECRET"
