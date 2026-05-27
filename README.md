@@ -85,8 +85,9 @@ Terraform/
 ├── 04-vnet-nic-nsg/                           # Create VNet, Subnet, NIC, Public IP, and NSG
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── outputs.tf
+│   ├── terraform.tfvars.example
 │   └── README.md
 │
 ├── 05-windows-vm/                             # Deploy a Windows Virtual Machine

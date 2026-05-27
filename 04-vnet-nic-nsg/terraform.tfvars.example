@@ -1,0 +1,8 @@
+var_location             = "West Europe"
+var_resource_group_name  = "terraformrg"
+var_virtual_network_name = "terraformvnet"
+var_subnet_name          = "terraformsubnet"
+var_public_ip_name       = "terraformpublicip"
+var_nic_name             = "terraformnic"
+var_nsg_name             = "terraformnsg"
+var_allowed_admin_cidr   = "x.x.x.x/32"

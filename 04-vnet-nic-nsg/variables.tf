@@ -33,3 +33,8 @@ variable "var_nsg_name" {
   type        = string
   description = "Name of the Network Security Group (NSG)"
 }
+
+variable "var_allowed_admin_cidr" {
+  type        = string
+  description = "Public IP range allowed for admin access, for example x.x.x.x/32"
+}

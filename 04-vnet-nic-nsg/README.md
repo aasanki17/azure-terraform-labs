@@ -47,9 +47,12 @@ var_subnet_name          = "terraformsubnet"
 var_public_ip_name       = "terraformpublicip"
 var_nic_name             = "terraformnic"
 var_nsg_name             = "terraformnsg"
+var_allowed_admin_cidr   = "x.x.x.x/32"
 ```
 
 Terraform will automatically detect and use this file if it's named terraform.tfvars.
+
+The actual `terraform.tfvars` file is not committed because it can contain sensitive or personal values. A `terraform.tfvars.example` file is included to show which values are required.
 
 ## Deployment Steps
 
@@ -76,3 +79,7 @@ To remove all resources created by this folder:
 ```bash
 terraform destroy -var-file="terraform.tfvars"
 ```
+
+## Security Note
+
+This lab uses a Network Security Group to control inbound access. Instead of allowing all inbound traffic, the rule allows RDP only from a configured admin IP range.
