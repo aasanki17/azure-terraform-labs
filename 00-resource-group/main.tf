@@ -8,12 +8,10 @@ terraform {
   }
 }
 
-# Authentication details
+# Azure Provider Configuration
 provider "azurerm" {
   features {}
 
-  # These values are specific to your Service Principal.
-  # Replace the placeholders only for this learning example.
   subscription_id = "YOUR_SUBSCRIPTION_ID"
   client_id       = "YOUR_CLIENT_ID"
   client_secret   = "YOUR_CLIENT_SECRET"
@@ -22,11 +20,11 @@ provider "azurerm" {
 
 # Create an Azure Resource Group
 resource "azurerm_resource_group" "resource_group" {
-  name     = "terraformrg"
-  location = "West Europe"
+  name     = "rg-aztf-00"
+  location = "Southeast Asia"
 
   tags = {
     environment = "dev"
-    project     = "terraform-learning"
+    project     = "azure-terraform-labs"
   }
 }
