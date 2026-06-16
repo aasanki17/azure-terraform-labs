@@ -91,7 +91,7 @@ azure-terraform-labs/
 │   ├── main.tf
 │   └── README.md
 │
-├── 04-vnet-nic-nsg/                           # Create VNet, Subnet, NIC, Public IP, and NSG
+├── 04-vnet-nic-nsg/                           # Create VNet, Subnet, NIC, Public IP, NSG, and subnet association
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── main.tf

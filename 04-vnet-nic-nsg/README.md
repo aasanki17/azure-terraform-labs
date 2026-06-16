@@ -1,24 +1,17 @@
-# 04 - Azure VNet, Subnet, NIC, Public IP and NSG
+# 04 - VNet, NIC, Public IP, and NSG
 
 ## Objective
 
-Use Terraform to create all required networking components:
+Create core Azure networking components using Terraform, including a Virtual Network, Subnet, Public IP, Network Interface, Network Security Group, and NSG-to-Subnet association.
 
-- Virtual Network
-- Subnet
-- Network Interface (NIC)
-- Public IP Address
-- Network Security Group (NSG)
-- NSG-to-Subnet Association
-
-The configuration is modular and clean, using only `variables.tf` for dynamic values. The Azure provider uses Azure CLI login (az login) for authentication, making it more secure and CI/CD friendly.
+This folder introduces a more structured Terraform workflow using separate configuration files, Azure CLI authentication with `az login`, and a Network Security Group rule that restricts RDP access to a configured admin IP range.
 
 ## Prerequisites
 
 - An active Azure Subscription
 - Azure CLI installed and authenticated (`az login`)
 - Terraform installed
-- An optional `terraform.tfvars` file (excluded via `.gitignore`) for custom values
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
 ## Azure Authentication (az login)
 
@@ -28,31 +21,20 @@ Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.)
 az login
 ```
 
-This allows Terraform to authenticate securely without passing client_id, client_secret, or tenant_id.
+This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
 
-## Variable Configuration
+## Configuration Files
 
-This project uses two files to manage variables:
+This folder uses separate Terraform files to keep the configuration organized:
 
-`variables.tf` — defines the expected input variables
-`terraform.tfvars` — provides values for those inputs
+- `variables.tf` — defines the input variables used by the configuration
+- `terraform.tfvars.example` — provides a safe template for required variable values
+- `terraform.tfvars` — stores local values used during deployment and is excluded from GitHub
+- `outputs.tf` — displays useful values after deployment, such as the Public IP address and Network Security Group name
 
-Example terraform.tfvars:
+Create a local `terraform.tfvars` file from `terraform.tfvars.example`, then replace `allowed_admin_cidr` with your own public IP in CIDR format, for example `x.x.x.x/32`.
 
-```hcl
-var_location             = "West Europe"
-var_resource_group_name  = "terraformrg"
-var_virtual_network_name = "terraformvn"
-var_subnet_name          = "terraformsubnet"
-var_public_ip_name       = "terraformpublicip"
-var_nic_name             = "terraformnic"
-var_nsg_name             = "terraformnsg"
-var_allowed_admin_cidr   = "x.x.x.x/32"
-```
-
-Terraform will automatically detect and use this file if it's named terraform.tfvars.
-
-The actual `terraform.tfvars` file is not committed because it can contain sensitive or personal values. A `terraform.tfvars.example` file is included to show which values are required.
+The actual `terraform.tfvars` file is not committed because it can contain personal values such as your public IP address.
 
 ## Deployment Steps
 
@@ -68,11 +50,13 @@ Preview configuration before deployment:
 terraform plan -var-file="terraform.tfvars"
 ```
 
-To create an Azure Virtual Network with two subnets:
+To create the networking resources:
 
 ```bash
 terraform apply -var-file="terraform.tfvars"
 ```
+
+After deployment, Terraform displays the Public IP address and Network Security Group name from `outputs.tf`.
 
 To remove all resources created by this folder:
 
