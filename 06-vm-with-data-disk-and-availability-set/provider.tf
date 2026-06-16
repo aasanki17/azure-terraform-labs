@@ -8,6 +8,7 @@ terraform {
   }
 }
 
+# Azure Provider Configuration
 provider "azurerm" {
   features {}
 
@@ -15,4 +16,3 @@ provider "azurerm" {
   # Authentication is still performed using `az login`
   subscription_id = "YOUR_SUBSCRIPTION_ID"
 }
-

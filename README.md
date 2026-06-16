@@ -109,8 +109,8 @@ azure-terraform-labs/
 ├── 06-vm-with-data-disk-and-availability-set/ # Add a Data Disk and Availability Set to a VM
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── terraform.tfvars.example
 │   └── README.md
 │
 ├── 07-custom-script-extension-with-sas/       # Install IIS Using Custom Script Extension and SAS Token
