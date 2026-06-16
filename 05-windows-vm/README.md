@@ -2,20 +2,16 @@
 
 ## Objective
 
-Use Terraform to provision a **Windows Virtual Machine** in Azure, along with all necessary network infrastructure components: - Virtual Network
+Create an **Azure Windows Virtual Machine** using Terraform, along with the required networking components: Virtual Network, Subnet, Public IP, and Network Interface.
 
-- Subnet
-- Network Interface (NIC)
-- Public IP
-
-This configuration builds on the previous networking setup in [04-vnet-nic-nsg](../04-vnet-nic-nsg/). It is modular, uses `variables.tf` for dynamic values, and leverages secure authentication via Azure CLI (`az login`).
+This folder builds on the networking foundation from `04-vnet-nic-nsg` and introduces Windows VM provisioning with sensitive input variables for administrator credentials.
 
 ## Prerequisites
 
 - An active Azure Subscription
 - Azure CLI installed and authenticated (`az login`)
 - Terraform installed
-- An optional `terraform.tfvars` file (excluded via `.gitignore`) for custom values
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
 ## Azure Authentication (az login)
 
@@ -25,30 +21,19 @@ Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.)
 az login
 ```
 
-This allows Terraform to authenticate securely without passing client_id, client_secret, or tenant_id.
+This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
 
-## Variable Configuration
+## Configuration Files
 
-This project uses two files to manage variables:
+This folder uses separate Terraform files to keep the configuration organized:
 
-`variables.tf` — defines expected inputs
-`terraform.tfvars` — supplies input values
+- `variables.tf` — defines the input variables used by the configuration
+- `terraform.tfvars.example` — provides a safe template for required variable values
+- `terraform.tfvars` — stores local values used during deployment and is excluded from GitHub
 
-Example terraform.tfvars:
+Create a local `terraform.tfvars` file from `terraform.tfvars.example`, then replace `admin_password` with a strong password that meets Azure VM password requirements.
 
-```hcl
-var_location             = "West Europe"
-var_resource_group_name  = "terraformrg"
-var_virtual_network_name = "terraformvn"
-var_subnet_name          = "terraformsubnet"
-var_public_ip_name       = "terraformpublicip"
-var_nic_name             = "terraformnic"
-var_windows_vm_name      = "terraformvm"
-var_admin_username       = "adminuser"
-var_admin_password       = "<YOUR_STRONG_PASSWORD>"
-```
-
-Terraform will automatically detect and use this file if it's named terraform.tfvars.
+The actual `terraform.tfvars` file is not committed because it can contain sensitive values such as the VM administrator password.
 
 ## Deployment Steps
 

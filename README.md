@@ -102,8 +102,8 @@ azure-terraform-labs/
 ├── 05-windows-vm/                             # Deploy a Windows Virtual Machine
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── terraform.tfvars.example
 │   └── README.md
 │
 ├── 06-vm-with-data-disk-and-availability-set/ # Add a Data Disk and Availability Set to a VM
