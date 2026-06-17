@@ -2,25 +2,31 @@
 
 ## Objective
 
-Use Terraform to deploy a **Windows Virtual Machine** in Azure and install **IIS** using a PowerShell script stored in **Azure Blob Storage**. The VM downloads the script using a **SAS token** (valid for 24 hours from the time of deployment) and installs IIS via the **Custom Script Extension**.
+Deploy an Azure Windows Virtual Machine using Terraform and install IIS using a PowerShell script stored in Azure Blob Storage.
 
-This setup includes all required networking resources:
+This folder builds on the Windows VM deployment from `05-windows-vm` and introduces automated post-deployment configuration using the Azure Custom Script Extension. The PowerShell script is uploaded to a private blob container and accessed by the VM through a short-lived SAS token.
+
+This setup includes:
 
 - Virtual Network
 - Subnet
 - Public IP
-- Network Interface (NIC)
+- Network Interface
+- Network Security Group
 - Storage Account
 - Blob Container
-- NSG and NSG-to-Subnet Association
+- PowerShell script upload
+- SAS token generation
+- Windows Virtual Machine
+- Custom Script Extension
 
 ## Prerequisites
 
 - An active Azure Subscription
 - Azure CLI installed and authenticated (`az login`)
 - Terraform installed
-- An optional `terraform.tfvars` file (excluded via `.gitignore`) for custom values
-- A valid PowerShell file (`IIS_Config.ps1`) placed in the same folder as your Terraform configuration
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
+- The PowerShell file `IIS_Config.ps1` available in this folder
 
 ## Azure Authentication (az login)
 
@@ -30,32 +36,21 @@ Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.)
 az login
 ```
 
-This allows Terraform to authenticate securely without passing client_id, client_secret, or tenant_id.
+This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
 
-## Variable Configuration
+## Configuration Files
 
-This project uses two files to manage variables:
+This folder uses separate Terraform files to keep the configuration organized:
 
-`variables.tf` — defines expected inputs
-`terraform.tfvars` — supplies input values
+- `variables.tf` — defines the input variables used by the configuration
+- `terraform.tfvars.example` — provides a safe template for required variable values
+- `terraform.tfvars` — stores local values used during deployment and is excluded from GitHub
+- `outputs.tf` — displays the public IP address used to access the IIS welcome page
+- `IIS_Config.ps1` — installs and starts IIS on the Windows VM
 
-Example terraform.tfvars:
+Create a local `terraform.tfvars` file from `terraform.tfvars.example`, then replace `admin_password` with a strong password that meets Azure VM password requirements.
 
-```hcl
-var_location               = "West Europe"
-var_resource_group_name    = "terraformrg"
-var_storage_account_name   = "terraformsa"
-var_storage_container_name = "terraformcontainer"
-var_virtual_network_name   = "terraformvn"
-var_subnet_name            = "terraformsubnet"
-var_public_ip_name         = "terraformpublicip"
-var_nic_name               = "terraformnic"
-var_windows_vm_name        = "terraformvm"
-var_admin_username         = "adminuser"
-var_admin_password         = "<YOUR_STRONG_PASSWORD>"
-```
-
-Terraform will automatically detect and use this file if it's named terraform.tfvars.
+The actual `terraform.tfvars` file is not committed because it can contain sensitive values such as the VM administrator password.
 
 ## Deployment Steps
 
@@ -71,19 +66,19 @@ Preview configuration before deployment:
 terraform plan -var-file="terraform.tfvars"
 ```
 
-To deploy a Windows VM and install IIS using a PowerShell script via SAS token and Custom Script Extension:
+Deploy the Windows VM and install IIS using the Custom Script Extension:
 
 ```bash
 terraform apply -var-file="terraform.tfvars"
 ```
 
-After applying, you can get the public IP using:
+After deployment, get the public IP address:
 
 ```bash
 terraform output
 ```
 
-Use this IP to RDP into the VM or access the IIS welcome page.
+Use this IP to access the IIS welcome page in your browser.
 
 To destroy all resources:
 
@@ -91,26 +86,32 @@ To destroy all resources:
 terraform destroy -var-file="terraform.tfvars"
 ```
 
-## Validate the Deployment
+## Validation
 
-1. Go to the Azure Portal > Resource Group
+After deployment, verify the following in the Azure Portal:
 
-2. Confirm that:
+1. Open the Resource Group created by this lab.
 
-   - The Storage Account and Blob Container are created
-   - The PowerShell script is uploaded to the blob
-   - The Windows VM is deployed and running
+2. Confirm that the following resources exist:
+   - Storage Account
+   - Blob Container
+   - Public IP
+   - Network Interface
+   - Network Security Group
+   - Windows Virtual Machine
 
-3. Verify IIS from inside the VM:
-   RDP into the VM and check that IIS is installed
+3. Open the Blob Container and confirm that `IIS_Config.ps1` was uploaded.
 
-4. Verify IIS externally:
-   Use the following command to retrieve the public IP:
+4. Open the Windows Virtual Machine and confirm that the Custom Script Extension completed successfully.
+
+5. Retrieve the public IP address:
 
 ```bash
 terraform output
 ```
 
-Then access the IIS welcome page in your browser:
+6. Open the IIS welcome page in your browser:
 
-`http://<PUBLIC_IP>`
+```text
+http://<PUBLIC_IP>
+```

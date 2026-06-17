@@ -116,8 +116,9 @@ azure-terraform-labs/
 ├── 07-custom-script-extension-with-sas/       # Install IIS Using Custom Script Extension and SAS Token
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── outputs.tf
+│   ├── terraform.tfvars.example
 │   ├── IIS_Config.ps1
 │   └── README.md
 │
