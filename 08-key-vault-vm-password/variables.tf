@@ -1,51 +1,66 @@
 # Resource Configuration Variables
-variable "var_location" {
+variable "location" {
   type        = string
-  description = "Azure region"
+  description = "Azure region where resources will be deployed"
 }
 
-variable "var_resource_group_name" {
+variable "resource_group_name" {
   type        = string
-  description = "Name of the Resource Group"
+  description = "Name of the Azure Resource Group"
 }
 
-variable "var_virtual_network_name" {
+variable "virtual_network_name" {
   type        = string
-  description = "Name of the Virtual Network"
+  description = "Name of the Azure Virtual Network"
 }
 
-variable "var_subnet_name" {
+variable "subnet_name" {
   type        = string
-  description = "Name of the Subnet"
+  description = "Name of the Azure Subnet"
 }
 
-variable "var_public_ip_name" {
+variable "public_ip_name" {
   type        = string
-  description = "Name of the Public IP Address"
+  description = "Name of the Azure Public IP Address"
 }
 
-variable "var_nic_name" {
+variable "network_interface_name" {
   type        = string
-  description = "Name of the Network Interface"
+  description = "Name of the Azure Network Interface"
 }
 
-variable "var_key_vault_name" {
+variable "ip_configuration_name" {
   type        = string
-  description = "Base name of the Key Vault (a random suffix is added for global uniqueness)"
+  description = "Name of the IP configuration for the Network Interface"
 }
 
-variable "var_windows_vm_name" {
+variable "key_vault_name" {
   type        = string
-  description = "Name of the Windows Virtual Machine"
+  description = "Base name of the Azure Key Vault. A random suffix is added for global uniqueness."
 }
 
-variable "var_admin_username" {
+variable "key_vault_secret_name" {
   type        = string
-  description = "Admin username for the Windows VM"
+  description = "Name of the Key Vault secret used to store the VM admin password"
 }
 
-variable "var_admin_password" {
+variable "windows_vm_name" {
+  type        = string
+  description = "Name of the Azure Windows Virtual Machine"
+}
+
+variable "os_disk_name" {
+  type        = string
+  description = "Name of the OS disk for the Windows Virtual Machine"
+}
+
+variable "admin_username" {
+  type        = string
+  description = "Admin username for the Windows Virtual Machine"
+}
+
+variable "admin_password" {
   type        = string
   sensitive   = true
-  description = "Admin password for the Windows VM"
+  description = "Admin password for the Windows Virtual Machine"
 }

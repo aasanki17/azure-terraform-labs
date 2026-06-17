@@ -125,8 +125,9 @@ azure-terraform-labs/
 ├── 08-key-vault-vm-password/                  # Store VM Password Securely in Azure Key Vault
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── outputs.tf
+│   ├── terraform.tfvars.example
 │   └── README.md
 │
 ├── 09-vnet-peering/                           # Configure VNet Peering Between Two VNets
