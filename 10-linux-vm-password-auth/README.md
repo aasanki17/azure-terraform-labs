@@ -1,24 +1,23 @@
-# 10 - Azure Linux Virtual Machine
+# 10 - Azure Linux Virtual Machine with Password Authentication
 
 ## Objective
 
-Use Terraform to provision a **Linux Virtual Machine** in Azure, along with all necessary network infrastructure components:
+Deploy an **Azure Linux Virtual Machine** using Terraform with password-based authentication.
 
-- Virtual Network (VNet)
+This module creates the networking components required for the Linux VM and configures an inbound SSH rule so the VM can be accessed using SSH.
+
+This setup includes:
+
+- Resource Group
+- Virtual Network
 - Subnet
 - Public IP
-- Network Interface (NIC)
-- Network Security Group (NSG) with SSH rule
-- NSG → Subnet Association
+- Network Interface
+- Network Security Group
+- NSG to Subnet Association
+- Linux Virtual Machine
 
 It uses password-based authentication for Linux VM login. Configuration is clean and modular, using `variables.tf` for dynamic values and Azure CLI for authentication.
-
-## Prerequisites
-
-- An active Azure Subscription
-- Azure CLI installed and authenticated (`az login`)
-- Terraform installed
-- An optional `terraform.tfvars` file (excluded via `.gitignore`) for custom values
 
 ## Azure Authentication (az login)
 
@@ -28,31 +27,26 @@ Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.)
 az login
 ```
 
-This allows Terraform to authenticate securely without passing client_id, client_secret, or tenant_id.
+This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
 
-## Variable Configuration
+## Prerequisites
 
-This project uses two files to manage variables:
+- An active Azure Subscription
+- Azure CLI installed and authenticated (`az login`)
+- Terraform installed
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
-`variables.tf` — defines expected inputs
-`terraform.tfvars` — supplies input values
+## Configuration Files
 
-Example terraform.tfvars:
+This folder uses separate Terraform files to keep the configuration organized:
 
-```hcl
-var_location             = "West Europe"
-var_resource_group_name  = "terraformrg"
-var_virtual_network_name = "terraformvn"
-var_subnet_name          = "terraformsubnet"
-var_public_ip_name       = "terraformpublicip"
-var_nic_name             = "terraformnic"
-var_nsg_name             = "terraformnsg"
-var_linux_vm_name        = "terraformvm"
-var_admin_username       = "adminuser"
-var_admin_password       = "<YOUR_STRONG_PASSWORD>"
-```
+- `variables.tf` — defines the input variables used by the configuration
+- `terraform.tfvars.example` — provides a safe template for required variable values
+- `terraform.tfvars` — stores local values used during deployment and is excluded from GitHub
 
-Terraform will automatically detect and use this file if it's named terraform.tfvars.
+Create a local `terraform.tfvars` file from `terraform.tfvars.example`, then replace `admin_password` with a strong password that meets Azure Linux VM password requirements.
+
+The actual `terraform.tfvars` file is not committed because it can contain sensitive values such as the VM administrator password.
 
 ## Deployment Steps
 
@@ -68,7 +62,7 @@ Preview configuration before deployment:
 terraform plan -var-file="terraform.tfvars"
 ```
 
-To deploy the Linux VM with password-based authentication:
+Deploy the Linux VM with password-based authentication:
 
 ```bash
 terraform apply -var-file="terraform.tfvars"
@@ -80,23 +74,54 @@ To destroy all resources:
 terraform destroy -var-file="terraform.tfvars"
 ```
 
-## Validate the Deployment
+## Validation
 
-1. Go to the Azure Portal > Resource Group
+After deployment, verify the following in the Azure Portal:
 
-2. Confirm that:
+1. Open the Resource Group created by this lab.
 
-   - The Virtual Network, Subnet, Public IP, NIC are created
-   - The Linux VM is deployed and in "Running" state
-   - The NSG is created and associated with the Subnet
-   - NSG has an inbound Allow SSH (22) rule
+2. Confirm that the following resources exist:
+   - Virtual Network
+   - Subnet
+   - Public IP
+   - Network Interface
+   - Network Security Group
+   - Linux Virtual Machine
 
-3. Verify SSH access from your Mac:
+3. Open the Network Security Group.
+
+4. Go to:
+   - Inbound security rules
+
+5. Confirm that the SSH rule exists:
+   - allow-ssh
+
+6. Confirm that the rule allows:
+   - Protocol: TCP
+   - Port: 22
+   - Direction: Inbound
+   - Access: Allow
+
+7. Open the Linux Virtual Machine and confirm that it is running.
+
+8. Copy the Public IP address.
+
+9. Connect from your terminal:
 
 ```bash
-ssh <admin_username>@<public_ip>
+ssh aztfadmin@<PUBLIC_IP_ADDRESS>
 ```
 
-4. Validate VM is reachable internally:
+10. After logging in, verify outbound internet access:
 
-   - Run ping google.com (to verify outbound internet)
+```bash
+ping google.com
+```
+
+## Security Note
+
+This lab uses password-based SSH authentication for learning purposes. Password authentication is less secure than SSH key-based authentication and should not be preferred for production environments.
+
+The NSG rule allows SSH traffic on port 22. For a production setup, SSH access should be restricted to a trusted source IP address instead of being open broadly.
+
+This module demonstrates basic Linux VM deployment and password-based SSH access using Terraform.

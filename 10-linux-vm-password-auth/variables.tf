@@ -1,52 +1,61 @@
 # Resource Configuration Variables
-variable "var_location" {
+variable "location" {
   type        = string
-  description = "Azure region"
+  description = "Azure region where resources will be deployed"
 }
 
-variable "var_resource_group_name" {
+variable "resource_group_name" {
   type        = string
-  description = "Name of the Resource Group"
+  description = "Name of the Azure Resource Group"
 }
 
-variable "var_virtual_network_name" {
+variable "virtual_network_name" {
   type        = string
-  description = "Name of the Virtual Network"
+  description = "Name of the Azure Virtual Network"
 }
 
-variable "var_subnet_name" {
+variable "subnet_name" {
   type        = string
-  description = "Name of the Subnet"
+  description = "Name of the Azure Subnet"
 }
 
-variable "var_public_ip_name" {
+variable "public_ip_name" {
   type        = string
-  description = "Name of the Public IP"
+  description = "Name of the Azure Public IP Address"
 }
 
-variable "var_nic_name" {
+variable "network_interface_name" {
   type        = string
-  description = "Name of the Network Interface"
+  description = "Name of the Azure Network Interface"
 }
 
-variable "var_nsg_name" {
+variable "ip_configuration_name" {
   type        = string
-  description = "Name of the Network Security Group"
-
+  description = "Name of the IP configuration for the Network Interface"
 }
 
-variable "var_linux_vm_name" {
+variable "network_security_group_name" {
   type        = string
-  description = "Name of the Linux Virtual Machine"
+  description = "Name of the Azure Network Security Group"
 }
 
-variable "var_admin_username" {
+variable "linux_vm_name" {
   type        = string
-  description = "Admin username for the Linux VM"
+  description = "Name of the Azure Linux Virtual Machine"
 }
 
-variable "var_admin_password" {
+variable "os_disk_name" {
+  type        = string
+  description = "Name of the OS disk for the Linux Virtual Machine"
+}
+
+variable "admin_username" {
+  type        = string
+  description = "Admin username for the Linux Virtual Machine"
+}
+
+variable "admin_password" {
   type        = string
   sensitive   = true
-  description = "Admin password for the Linux VM"
+  description = "Admin password for the Linux Virtual Machine"
 }

@@ -140,8 +140,8 @@ azure-terraform-labs/
 ├── 10-linux-vm-password-auth/                 # Deploy a Linux VM Using Password Authentication
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── terraform.tfvars.example
 │   └── README.md
 │
 ├── 11-linux-vm-with-ssh/                      # Deploy a Linux VM Using SSH Key Authentication
