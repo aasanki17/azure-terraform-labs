@@ -1,30 +1,30 @@
 # Resource Configuration Variables
-variable "var_location" {
+variable "location" {
   type        = string
-  description = "Azure region"
+  description = "Azure region where resources will be deployed"
 }
 
-variable "var_resource_group_name" {
+variable "resource_group_name" {
   type        = string
-  description = "Name of the Resource Group"
+  description = "Name of the Azure Resource Group"
 }
 
-variable "var_virtual_network_name1" {
+variable "virtual_network_1_name" {
   type        = string
-  description = "Name of the Virtual Network 1"
+  description = "Name of the first Azure Virtual Network"
 }
 
-variable "var_virtual_network_name2" {
+variable "virtual_network_2_name" {
   type        = string
-  description = "Name of the Virtual Network 2"
+  description = "Name of the second Azure Virtual Network"
 }
 
-variable "var_vnetpeer1to2" {
+variable "vnet_1_to_vnet_2_peering_name" {
   type        = string
-  description = "Name of VNet peering from VNet1 to VNet2"
+  description = "Name of the VNet peering from VNet 1 to VNet 2"
 }
 
-variable "var_vnetpeer2to1" {
+variable "vnet_2_to_vnet_1_peering_name" {
   type        = string
-  description = "Name of VNet peering from VNet2 to VNet1"
+  description = "Name of the VNet peering from VNet 2 to VNet 1"
 }

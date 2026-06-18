@@ -133,8 +133,8 @@ azure-terraform-labs/
 ├── 09-vnet-peering/                           # Configure VNet Peering Between Two VNets
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── terraform.tfvars.example
 │   └── README.md
 │
 ├── 10-linux-vm-password-auth/                 # Deploy a Linux VM Using Password Authentication

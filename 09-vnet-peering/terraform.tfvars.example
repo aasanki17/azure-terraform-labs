@@ -1,0 +1,6 @@
+location                      = "Southeast Asia"
+resource_group_name           = "rg-aztf-09"
+virtual_network_1_name        = "vnet-aztf-09-1"
+virtual_network_2_name        = "vnet-aztf-09-2"
+vnet_1_to_vnet_2_peering_name = "peer-aztf-09-vnet-1-to-vnet-2"
+vnet_2_to_vnet_1_peering_name = "peer-aztf-09-vnet-2-to-vnet-1"
