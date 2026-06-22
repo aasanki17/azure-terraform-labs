@@ -1,0 +1,6 @@
+location              = "Southeast Asia"
+resource_group_name   = "rg-aztf-14"
+service_plan_name     = "asp-aztf-14"
+web_app_name          = "app-aztf-14"
+github_repository_url = "https://github.com/aasanki17/WeddingInvitation.git"
+github_token          = "<YOUR_GITHUB_PERSONAL_ACCESS_TOKEN>"

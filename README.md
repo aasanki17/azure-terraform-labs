@@ -1,8 +1,6 @@
 # Terraform (Azure)
 
-This repository contains hands-on Terraform projects for deploying Microsoft Azure infrastructure.
-
-Each folder is a **standalone Terraform project** that demonstrates a specific Azure service or Infrastructure as Code concept.
+This repository contains hands-on Terraform projects for deploying Microsoft Azure infrastructure, with each folder demonstrating a practical Infrastructure as Code concept.
 
 ## Tools
 
@@ -169,8 +167,8 @@ azure-terraform-labs/
 ├── 14-web-app-with-github-deploy/             # Deploy a Web App with GitHub-based Continuous Deployment
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── terraform.tfvars.example
 │   └── README.md
 │
 ├── 15-mssql-database/                         # Provision Azure SQL Server and Database with firewall rule

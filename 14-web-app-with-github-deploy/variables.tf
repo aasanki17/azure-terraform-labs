@@ -1,26 +1,31 @@
 # Resource Configuration Variables
-variable "var_location" {
+variable "location" {
   type        = string
-  description = "Azure region"
+  description = "Azure region where resources will be deployed"
 }
 
-variable "var_resource_group_name" {
+variable "resource_group_name" {
   type        = string
   description = "Name of the Azure Resource Group"
 }
 
-variable "var_service_plan_name" {
+variable "service_plan_name" {
   type        = string
-  description = "Name of the Azure App Service plan"
+  description = "Name of the Azure App Service Plan"
 }
 
-variable "var_web_app_name" {
+variable "web_app_name" {
   type        = string
-  description = "Base name of the Azure Windows Web App (a random suffix is added for global uniqueness)"
+  description = "Base name for the Azure Windows Web App. A random suffix is added for global uniqueness"
 }
 
-variable "var_github_token" {
+variable "github_repository_url" {
   type        = string
-  description = "GitHub Personal Access Token (PAT) used by Azure App Service to access the repository"
+  description = "GitHub repository URL used as the deployment source for the Web App"
+}
+
+variable "github_token" {
+  type        = string
+  description = "GitHub Personal Access Token used by Azure App Service to access the repository"
   sensitive   = true
 }
