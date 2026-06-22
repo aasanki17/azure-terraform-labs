@@ -1,24 +1,23 @@
-# 11 - Azure Linux VM with SSH Authentication
+# 11 - Azure Linux Virtual Machine with SSH Key Authentication
 
 ## Objective
 
-Use Terraform to provision a **Linux Virtual Machine** in Azure using **SSH authentication**, along with the required networking components:
+Deploy an **Azure Linux Virtual Machine** using Terraform with SSH key-based authentication.
 
+This module creates the networking components required for the Linux VM and configures an inbound SSH rule so the VM can be accessed securely using an SSH private key.
+
+This setup includes:
+
+- Resource Group
 - Virtual Network
 - Subnet
-- Network Interface (NIC)
 - Public IP
-- Network Security Group (NSG)
+- Network Interface
+- Network Security Group
+- NSG to Subnet Association
+- Linux Virtual Machine
 
-SSH authentication enhances security by ensuring that only clients with a valid private key can access the VM. It uses dynamic input via `variables.tf` and secure authentication via `az login`.
-
-## Prerequisites
-
-- An active Azure Subscription
-- Azure CLI installed and authenticated (`az login`)
-- Terraform installed
-- A valid SSH key pair (e.g., `~/.ssh/terraformvm_key.pub`)
-- An optional `terraform.tfvars` file (excluded via `.gitignore`) for custom values
+It uses SSH key-based authentication for Linux VM login. The public key is read from a local file and added to the VM during provisioning. The private key remains on your local machine and is not committed to GitHub.
 
 ## Azure Authentication (az login)
 
@@ -28,75 +27,70 @@ Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.)
 az login
 ```
 
-This allows Terraform to authenticate securely without passing client_id, client_secret, or tenant_id.
+This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
 
-## SSH Key Overview
+## Prerequisites
 
-SSH (Secure Shell) allows you to securely connect to your Linux VM without using a password. It works using a key pair:
+- An active Azure Subscription
+- Azure CLI installed and authenticated (`az login`)
+- Terraform installed
+- A valid SSH key pair
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
-- The **public key** is provisioned to the VM using Terraform
-- The **private key**y stays securely on your local machine. Never share your private key.
+## SSH Key Setup
 
-You can generate an SSH key pair using the command below:
+SSH key authentication uses a key pair:
+
+- The public key is used by Azure to configure VM access
+- The private key stays securely on your local machine
+
+Generate an SSH key pair:
 
 ```bash
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/<file_name>
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/aztf-11-linux
 ```
 
-Verify the keys:
+When prompted for a passphrase, press Enter twice to leave it empty for this lab.
+
+This creates:
+
+- Private key: `~/.ssh/aztf-11-linux`
+- Public key: `~/.ssh/aztf-11-linux.pub`
+
+Check that both files were created:
 
 ```bash
-ls -l ~/.ssh/<file_name>*
+ls -l ~/.ssh/aztf-11-linux*
 ```
 
-you should see something like:
+You should see both key files:
 
--rw------- <file_name> (A **private key** at: ~/.ssh/id_rsa)
--rw-r--r-- <file_name>.pub (A **public key** at: ~/.ssh/id_rsa.pub)
+- `aztf-11-linux`
+- `aztf-11-linux.pub`
 
 Secure the private key permissions:
 
 ```bash
-chmod 600 ~/.ssh/<file_name>
+chmod 600 ~/.ssh/aztf-11-linux
 ```
 
-This method improves security and follows Azure best practices. To connect into the VM:
-
-```bash
-ssh -i ~/.ssh/<file_name> <admin_username>@<PUBLIC_IP>
-```
-
-Your SSH client automatically uses the private key stored in ~/.ssh/id_rsa. If the private key does not match the public key on the VM, login will fail with a “Permission denied (publickey)” error.
-
-In Production:
-
-- SSH keys are usually generated outside Terraform
-- The public key path is referenced in `terraform.tfvars`
-- The private key stays secure with the engineer or is managed via tools like Azure Key Vault or GitHub Secrets (CI/CD)
-
-## Variable Configuration
-
-This project uses two files to manage variables:
-
-`variables.tf` — defines expected inputs
-`terraform.tfvars` — supplies input values
-
-Example terraform.tfvars:
+Use the public key path in your local `terraform.tfvars` file:
 
 ```hcl
-var_location             = "West Europe"
-var_resource_group_name  = "terraformrg"
-var_virtual_network_name = "terraformvn"
-var_subnet_name          = "terraformsubnet"
-var_public_ip_name       = "terraformpublicip"
-var_nic_name             = "terraformnic"
-var_nsg_name             = "terraformnsg"
-var_linux_vm_name        = "terraformvm"
-var_admin_username       = "adminuser"
-var_public_ssh_key_path  = "~/.ssh/terraformvm_key.pub"
+public_ssh_key_path = "~/.ssh/aztf-11-linux.pub"
 ```
 
-Terraform will automatically detect and use this file if it's named terraform.tfvars.
+## Configuration Files
+
+This folder uses separate Terraform files to keep the configuration organized:
+
+- `variables.tf` — defines the input variables used by the configuration
+- `terraform.tfvars.example` — provides a safe template for required variable values
+- `terraform.tfvars` — stores local values used during deployment and is excluded from GitHub
+
+Create a local `terraform.tfvars` file from `terraform.tfvars.example`, then update the SSH public key path if needed.
+
+The actual `terraform.tfvars` file is not committed because it can contain environment-specific values such as local SSH key paths.
 
 ## Deployment Steps
 
@@ -112,7 +106,7 @@ Preview configuration before deployment:
 terraform plan -var-file="terraform.tfvars"
 ```
 
-To deploy the Linux VM with SSH authentication enabled:
+Deploy the Linux VM with SSH key-based authentication:
 
 ```bash
 terraform apply -var-file="terraform.tfvars"
@@ -124,10 +118,56 @@ To destroy all resources:
 terraform destroy -var-file="terraform.tfvars"
 ```
 
-## Validate the Deployment
+## Validation
 
-Once deployed, copy the public IP from the Azure portal and SSH into the VM:
+After deployment, verify the following in the Azure Portal:
+
+1. Open the Resource Group created by this lab.
+
+2. Confirm that the following resources exist:
+   - Virtual Network
+   - Subnet
+   - Public IP
+   - Network Interface
+   - Network Security Group
+   - Linux Virtual Machine
+
+3. Open the Network Security Group.
+
+4. Go to:
+   - Inbound security rules
+
+5. Confirm that the SSH rule exists:
+   - allow-ssh
+
+6. Confirm that the rule allows:
+   - Protocol: TCP
+   - Port: 22
+   - Direction: Inbound
+   - Access: Allow
+
+7. Open the Linux Virtual Machine and confirm that it is running.
+
+8. Copy the Public IP address.
+
+9. Connect from your terminal using the private key:
 
 ```bash
-ssh -i ~/.ssh/<file_name> <admin_username>@<PUBLIC_IP>
+ssh -i ~/.ssh/aztf-11-linux aztfadmin@<PUBLIC_IP_ADDRESS>
 ```
+
+10. After logging in, verify outbound internet access:
+
+```bash
+ping google.com
+```
+
+## Security Note
+
+This lab uses SSH key-based authentication, which is more secure than password-based authentication.
+
+The private SSH key stays on your local machine and should never be committed to GitHub. Only the public key is referenced by Terraform and added to the Linux VM.
+
+The NSG rule allows SSH traffic on port 22. For a production setup, SSH access should be restricted to a trusted source IP address instead of being open broadly.
+
+This module demonstrates Linux VM deployment with SSH key-based authentication using Terraform.

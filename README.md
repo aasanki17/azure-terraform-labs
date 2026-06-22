@@ -147,8 +147,8 @@ azure-terraform-labs/
 ├── 11-linux-vm-with-ssh/                      # Deploy a Linux VM Using SSH Key Authentication
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── terraform.tfvars.example
 │   └── README.md
 │
 ├── 12-linux-vm-with-cloudinit/                # Configure a Linux VM at Boot Using cloud-init (NGINX)
