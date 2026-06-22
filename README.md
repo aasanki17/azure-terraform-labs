@@ -154,8 +154,8 @@ azure-terraform-labs/
 ├── 12-linux-vm-with-cloudinit/                # Configure a Linux VM at Boot Using cloud-init (NGINX)
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── terraform.tfvars.example
 │   ├── cloud-init.yaml
 │   └── README.md
 │

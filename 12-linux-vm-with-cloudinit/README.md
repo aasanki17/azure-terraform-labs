@@ -1,41 +1,100 @@
-# 12 - Azure Linux VM with cloud-init (NGINX Installation)
+# 12 - Azure Linux Virtual Machine with cloud-init
 
 ## Objective
 
-Provision a **Linux Virtual Machine** in Azure using Terraform and configure it with **cloud-init** to automatically install **NGINX** upon deployment. This setup includes all required networking components:
+Deploy an **Azure Linux Virtual Machine** using Terraform and configure it with **cloud-init** to automatically install and start **NGINX** during first boot.
 
+This module creates the networking components required for the Linux VM, configures inbound SSH and HTTP access, and uses cloud-init to bootstrap the VM with NGINX.
+
+This setup includes:
+
+- Resource Group
 - Virtual Network
 - Subnet
-- Network Interface (NIC)
-- Public IP Address
-- Network Security Group (SSH + HTTP)
-- Linux VM bootstrapped using **cloud-init**
-- Automatic installation of **NGINX**
+- Public IP
+- Network Interface
+- Network Security Group
+- NSG to Subnet Association
+- Linux Virtual Machine
+- cloud-init configuration
+- NGINX installation
 
-This approach showcases **Infrastructure as Code (IaC)** with **automatic provisioning and configuration** of services on first boot.
+It uses SSH key-based authentication for Linux VM login. The public key is read from a local file and added to the VM during provisioning. The private key remains on your local machine and is not committed to GitHub.
+
+cloud-init is used to install and start NGINX automatically when the VM boots for the first time.
+
+## Azure Authentication (az login)
+
+Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.), this project uses the Azure CLI session:
+
+```bash
+az login
+```
+
+This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
 
 ## Prerequisites
 
 - An active Azure Subscription
 - Azure CLI installed and authenticated (`az login`)
 - Terraform installed
-- A valid SSH key pair (default path: `~/.ssh/id_rsa.pub`)
-- An optional `terraform.tfvars` file (excluded via `.gitignore`) for custom values
+- A valid SSH key pair
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
-## What is cloud-init?
+## SSH Key Setup
 
-`cloud-init` is a widely supported mechanism to initialize cloud instances at **first boot**. It allows automation of:
+SSH key authentication uses a key pair:
 
-- Package installations (like `nginx`, `curl`)
-- User setup
-- Hostname configuration
-- Custom startup commands (`runcmd`)
+- The public key is used by Azure to configure VM access
+- The private key stays securely on your local machine
 
-In this project, we use `cloud-init` to install and start **NGINX** on the VM during provisioning.
+Generate an SSH key pair:
 
-### cloud-init YAML Configuration
+```bash
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/aztf-12-linux
+```
 
-The actual cloud-init configuration is stored in a separate file: `cloud-init.yaml`.
+When prompted for a passphrase, press Enter twice to leave it empty for this lab.
+
+This creates:
+
+- Private key: `~/.ssh/aztf-12-linux`
+- Public key: `~/.ssh/aztf-12-linux.pub`
+
+Check that both files were created:
+
+```bash
+ls -l ~/.ssh/aztf-12-linux*
+```
+
+You should see both key files:
+
+- `aztf-12-linux`
+- `aztf-12-linux.pub`
+
+Secure the private key permissions:
+
+```bash
+chmod 600 ~/.ssh/aztf-12-linux
+```
+
+Use the public key path in your local `terraform.tfvars` file:
+
+```hcl
+public_ssh_key_path = "~/.ssh/aztf-12-linux.pub"
+```
+
+## cloud-init Configuration
+
+cloud-init is used to configure the Linux VM during first boot.
+
+The cloud-init configuration is stored in:
+
+```text
+cloud-init.yaml
+```
+
+The file installs NGINX, enables the NGINX service, and starts it automatically.
 
 ```yaml
 #cloud-config
@@ -50,41 +109,26 @@ runcmd:
   - systemctl start nginx
 ```
 
-Terraform reads this file with templatefile(...) and passes it to the VM via the custom_data field, base64-encoded.
+Terraform reads this file and passes it to the VM using the `custom_data` argument.
 
-## Azure Authentication (az login)
-
-Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.), this project uses the Azure CLI session:
-
-```bash
-az login
-```
-
-This allows Terraform to authenticate securely without passing client_id, client_secret, or tenant_id.
-
-## Variable Configuration
-
-This project uses two files to manage variables:
-
-`variables.tf` — defines expected inputs
-`terraform.tfvars` — supplies input values
-
-Example terraform.tfvars:
+Azure requires `custom_data` to be base64-encoded, so the Terraform configuration uses:
 
 ```hcl
-var_location             = "West Europe"
-var_resource_group_name  = "terraformrg"
-var_virtual_network_name = "terraformvn"
-var_subnet_name          = "terraformsubnet"
-var_public_ip_name       = "terraformpublicip"
-var_nic_name             = "terraformnic"
-var_nsg_name             = "terraformnsg"
-var_linux_vm_name        = "terraformvm"
-var_admin_username       = "adminuser"
-var_public_ssh_key_path  = "~/.ssh/terraformvm_key.pub"
+custom_data = base64encode(local.cloud_init_data)
 ```
 
-Terraform will automatically detect and use this file if it's named terraform.tfvars.
+## Configuration Files
+
+This folder uses separate Terraform files to keep the configuration organized:
+
+- `variables.tf` — defines the input variables used by the configuration
+- `terraform.tfvars.example` — provides a safe template for required variable values
+- `terraform.tfvars` — stores local values used during deployment and is excluded from GitHub
+- `cloud-init.yaml` — defines the first-boot VM configuration used to install NGINX
+
+Create a local `terraform.tfvars` file from `terraform.tfvars.example`, then update the SSH public key path if needed.
+
+The actual `terraform.tfvars` file is not committed because it can contain environment-specific values such as local SSH key paths.
 
 ## Deployment Steps
 
@@ -100,7 +144,7 @@ Preview configuration before deployment:
 terraform plan -var-file="terraform.tfvars"
 ```
 
-To deploy the Linux VM with NGINX installed via cloud-init:
+Deploy the Linux VM with cloud-init:
 
 ```bash
 terraform apply -var-file="terraform.tfvars"
@@ -112,34 +156,81 @@ To destroy all resources:
 terraform destroy -var-file="terraform.tfvars"
 ```
 
-## Validate the Deployment
+## Validation
 
-1. In the Azure Portal, go to Resource groups → your resource group → terraformvm (or your VM name) and confirm the VM is running.
+After deployment, verify the following in the Azure Portal:
 
-2. From the portal, copy the Public IP address of the VM.
+1. Open the Resource Group created by this lab.
 
-3. From your Mac terminal, SSH into the VM:
+2. Confirm that the following resources exist:
+   - Virtual Network
+   - Subnet
+   - Public IP
+   - Network Interface
+   - Network Security Group
+   - Linux Virtual Machine
+
+3. Open the Network Security Group.
+
+4. Go to:
+   - Inbound security rules
+
+5. Confirm that the SSH rule exists:
+   - allow-ssh
+
+6. Confirm that the SSH rule allows:
+   - Protocol: TCP
+   - Port: 22
+   - Direction: Inbound
+   - Access: Allow
+
+7. Confirm that the HTTP rule exists:
+   - allow-http
+
+8. Confirm that the HTTP rule allows:
+   - Protocol: TCP
+   - Port: 80
+   - Direction: Inbound
+   - Access: Allow
+
+9. Open the Linux Virtual Machine and confirm that it is running.
+
+10. Copy the Public IP address.
+
+11. Connect from your terminal using the private key:
 
 ```bash
-ssh -i ~/.ssh/<file_name> <admin_username>@<PUBLIC_IP>
+ssh -i ~/.ssh/aztf-12-linux aztfadmin@<PUBLIC_IP_ADDRESS>
 ```
 
-4. Validate that NGINX is running:
-
-```bash
-curl http://<PUBLIC_IP>
-```
-
-or
+12. After logging in, verify that NGINX is installed:
 
 ```bash
 nginx -v
 ```
 
-or
+13. Verify that the NGINX service is running:
 
 ```bash
 systemctl status nginx
 ```
 
+14. Test NGINX from your local terminal or browser:
+
+```bash
+curl http://<PUBLIC_IP_ADDRESS>
+```
+
 You should see the default NGINX welcome page HTML.
+
+## Security Note
+
+This lab uses SSH key-based authentication, which is more secure than password-based authentication.
+
+The private SSH key stays on your local machine and should never be committed to GitHub. Only the public key is referenced by Terraform and added to the Linux VM.
+
+The NSG allows SSH traffic on port 22 and HTTP traffic on port 80. For a production setup, SSH access should be restricted to a trusted source IP address instead of being open broadly.
+
+cloud-init runs during the VM's first boot. If the cloud-init configuration changes later, the VM may need to be recreated for the first-boot configuration to run again.
+
+This module demonstrates Linux VM deployment with SSH key-based authentication and automated NGINX installation using cloud-init.
