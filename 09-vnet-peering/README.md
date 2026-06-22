@@ -14,13 +14,6 @@ This setup includes:
 - VNet 1 to VNet 2 peering
 - VNet 2 to VNet 1 peering
 
-## Prerequisites
-
-- An active Azure Subscription
-- Azure CLI installed and authenticated (`az login`)
-- Terraform installed
-- A local `terraform.tfvars` file created from `terraform.tfvars.example`
-
 ## Azure Authentication (az login)
 
 Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.), this project uses the Azure CLI session:
@@ -30,6 +23,13 @@ az login
 ```
 
 This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
+
+## Prerequisites
+
+- An active Azure Subscription
+- Azure CLI installed and authenticated (`az login`)
+- Terraform installed
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
 ## Configuration Files
 
@@ -90,9 +90,3 @@ After deployment, verify the following in the Azure Portal:
    - Confirm that the peering state is Connected
 
 5. Confirm that virtual network access is enabled for both peering connections.
-
-## Security Note
-
-VNet peering enables private communication between Virtual Networks over Azure’s backbone network. It does not require public IP addresses or public internet access between the peered networks.
-
-This module demonstrates how to connect two Azure Virtual Networks securely using bidirectional VNet peering.

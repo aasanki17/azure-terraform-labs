@@ -120,8 +120,4 @@ ping google.com
 
 ## Security Note
 
-This lab uses password-based SSH authentication for learning purposes. Password authentication is less secure than SSH key-based authentication and should not be preferred for production environments.
-
-The NSG rule allows SSH traffic on port 22. For a production setup, SSH access should be restricted to a trusted source IP address instead of being open broadly.
-
-This module demonstrates basic Linux VM deployment and password-based SSH access using Terraform.
+Password authentication is less secure than SSH key-based authentication and should not be preferred for production environments.

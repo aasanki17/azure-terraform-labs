@@ -2,9 +2,15 @@
 
 ## Objective
 
-Create an Azure Storage Account using Terraform and understand how Terraform creates an implicit dependency between resources.
+Create an **Azure Storage Account** using Terraform and understand how Terraform creates an **implicit dependency** between resources.
 
 This folder continues the manual Service Principal authentication method introduced in folder `00-resource-group`.
+
+## Authentication Note
+
+The provider block uses placeholder values to show the Service Principal authentication fields.
+
+Real credentials should not be committed to GitHub. Later folders in this repository use Azure CLI authentication with `az login`.
 
 ## Prerequisites
 
@@ -17,12 +23,6 @@ This folder continues the manual Service Principal authentication method introdu
   - `tenant_id` — Directory (tenant) ID
   - `subscription_id` — Your Azure subscription ID
 - Assign the app registration the Contributor role for the subscription or resource group where the resources will be deployed
-
-## Authentication Note
-
-The provider block uses placeholder values to show the Service Principal authentication fields.
-
-Real credentials should not be committed to GitHub. Later folders in this repository use Azure CLI authentication with `az login`.
 
 ## How It Works
 

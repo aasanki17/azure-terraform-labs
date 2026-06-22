@@ -2,7 +2,7 @@
 
 ## Objective
 
-Deploy an Azure Windows Virtual Machine using Terraform and install IIS using a PowerShell script stored in Azure Blob Storage.
+Deploy an **Azure Windows Virtual Machine** using Terraform and install **IIS** with a PowerShell script stored in Azure Blob Storage.
 
 This folder builds on the Windows VM deployment from `05-windows-vm` and introduces automated post-deployment configuration using the Azure Custom Script Extension. The PowerShell script is uploaded to a private blob container and accessed by the VM through a short-lived SAS token.
 
@@ -20,14 +20,6 @@ This setup includes:
 - Windows Virtual Machine
 - Custom Script Extension
 
-## Prerequisites
-
-- An active Azure Subscription
-- Azure CLI installed and authenticated (`az login`)
-- Terraform installed
-- A local `terraform.tfvars` file created from `terraform.tfvars.example`
-- The PowerShell file `IIS_Config.ps1` available in this folder
-
 ## Azure Authentication (az login)
 
 Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.), this project uses the Azure CLI session:
@@ -37,6 +29,14 @@ az login
 ```
 
 This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
+
+## Prerequisites
+
+- An active Azure Subscription
+- Azure CLI installed and authenticated (`az login`)
+- Terraform installed
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
+- The PowerShell file `IIS_Config.ps1` available in this folder
 
 ## Configuration Files
 

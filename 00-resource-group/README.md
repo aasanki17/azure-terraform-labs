@@ -2,9 +2,15 @@
 
 ## Objective
 
-Create an Azure Resource Group using Terraform and understand how **Service Principal authentication** works in Azure.
+Create an **Azure Resource Group** using Terraform and understand how **Service Principal authentication** works in Azure.
 
 This folder demonstrates manual Service Principal authentication using placeholder provider values.
+
+## Authentication Note
+
+The provider block uses placeholder values to show the Service Principal authentication fields.
+
+Real credentials should not be committed to GitHub. Later folders in this repository use Azure CLI authentication with `az login`.
 
 ## Prerequisites
 
@@ -17,12 +23,6 @@ This folder demonstrates manual Service Principal authentication using placehold
   - `tenant_id` — Directory (tenant) ID
   - `subscription_id` — Your Azure subscription ID
 - Assign the app registration the Contributor role for the subscription or resource group where the resources will be deployed
-
-## Authentication Note
-
-The provider block uses placeholder values to show the Service Principal authentication fields.
-
-Real credentials should not be committed to GitHub. Later folders in this repository use Azure CLI authentication with `az login`.
 
 ## Deployment Steps
 

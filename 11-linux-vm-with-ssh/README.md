@@ -164,10 +164,4 @@ ping google.com
 
 ## Security Note
 
-This lab uses SSH key-based authentication, which is more secure than password-based authentication.
-
-The private SSH key stays on your local machine and should never be committed to GitHub. Only the public key is referenced by Terraform and added to the Linux VM.
-
-The NSG rule allows SSH traffic on port 22. For a production setup, SSH access should be restricted to a trusted source IP address instead of being open broadly.
-
-This module demonstrates Linux VM deployment with SSH key-based authentication using Terraform.
+This lab uses SSH key-based authentication instead of password authentication. The private key remains on the local machine, while only the public key is passed to Azure during VM provisioning.

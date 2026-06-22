@@ -86,8 +86,6 @@ public_ssh_key_path = "~/.ssh/aztf-12-linux.pub"
 
 ## cloud-init Configuration
 
-cloud-init is used to configure the Linux VM during first boot.
-
 The cloud-init configuration is stored in:
 
 ```text
@@ -225,12 +223,6 @@ You should see the default NGINX welcome page HTML.
 
 ## Security Note
 
-This lab uses SSH key-based authentication, which is more secure than password-based authentication.
-
-The private SSH key stays on your local machine and should never be committed to GitHub. Only the public key is referenced by Terraform and added to the Linux VM.
-
-The NSG allows SSH traffic on port 22 and HTTP traffic on port 80. For a production setup, SSH access should be restricted to a trusted source IP address instead of being open broadly.
+This lab uses SSH key-based authentication and allows HTTP access for NGINX validation. For production workloads, SSH access should be restricted to trusted source IP ranges.
 
 cloud-init runs during the VM's first boot. If the cloud-init configuration changes later, the VM may need to be recreated for the first-boot configuration to run again.
-
-This module demonstrates Linux VM deployment with SSH key-based authentication and automated NGINX installation using cloud-init.

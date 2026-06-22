@@ -2,16 +2,9 @@
 
 ## Objective
 
-Create an Azure Windows Virtual Machine using Terraform with an attached managed data disk and an Availability Set.
+Create an **Azure Windows Virtual Machine** using Terraform with an attached **managed data disk** and an **Availability Set**.
 
 This folder builds on the Windows VM deployment from `05-windows-vm` and introduces additional VM resiliency and storage concepts, including Availability Sets and managed data disk attachment.
-
-## Prerequisites
-
-- An active Azure Subscription
-- Azure CLI installed and authenticated (`az login`)
-- Terraform installed
-- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
 ## Azure Authentication (az login)
 
@@ -22,6 +15,13 @@ az login
 ```
 
 This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
+
+## Prerequisites
+
+- An active Azure Subscription
+- Azure CLI installed and authenticated (`az login`)
+- Terraform installed
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
 ## Configuration Files
 

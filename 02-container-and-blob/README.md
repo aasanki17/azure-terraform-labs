@@ -2,9 +2,15 @@
 
 ## Objective
 
-Create an Azure Storage Container and upload a Blob using Terraform.
+Create an **Azure Storage Container** and upload a **Blob** using Terraform.
 
 This folder demonstrates explicit and implicit dependencies between Azure resources while continuing the manual Service Principal authentication method from the earlier folders.
+
+## Authentication Note
+
+The provider block uses placeholder values to show the Service Principal authentication fields.
+
+Real credentials should not be committed to GitHub. Later folders in this repository use Azure CLI authentication with `az login`.
 
 ## Prerequisites
 
@@ -17,12 +23,6 @@ This folder demonstrates explicit and implicit dependencies between Azure resour
   - `tenant_id` — Directory (tenant) ID
   - `subscription_id` — Your Azure subscription ID
 - Assign the app registration the **Contributor** role for the subscription or resource group where the resources will be deployed
-
-## Authentication Note
-
-The provider block uses placeholder values to show the Service Principal authentication fields.
-
-Real credentials should not be committed to GitHub. Later folders in this repository use Azure CLI authentication with `az login`.
 
 ## How It Works
 

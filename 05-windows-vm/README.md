@@ -6,13 +6,6 @@ Create an **Azure Windows Virtual Machine** using Terraform, along with the requ
 
 This folder builds on the networking foundation from `04-vnet-nic-nsg` and introduces Windows VM provisioning with sensitive input variables for administrator credentials.
 
-## Prerequisites
-
-- An active Azure Subscription
-- Azure CLI installed and authenticated (`az login`)
-- Terraform installed
-- A local `terraform.tfvars` file created from `terraform.tfvars.example`
-
 ## Azure Authentication (az login)
 
 Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.), this project uses the Azure CLI session:
@@ -22,6 +15,13 @@ az login
 ```
 
 This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
+
+## Prerequisites
+
+- An active Azure Subscription
+- Azure CLI installed and authenticated (`az login`)
+- Terraform installed
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
 ## Configuration Files
 

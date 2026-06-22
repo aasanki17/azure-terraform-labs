@@ -2,16 +2,9 @@
 
 ## Objective
 
-Create core Azure networking components using Terraform, including a Virtual Network, Subnet, Public IP, Network Interface, Network Security Group, and NSG-to-Subnet association.
+Create core **Azure networking components** using Terraform, including a Virtual Network, Subnet, Public IP, Network Interface, Network Security Group, and NSG-to-Subnet association.
 
 This folder introduces a more structured Terraform workflow using separate configuration files, Azure CLI authentication with `az login`, and a Network Security Group rule that restricts RDP access to a configured admin IP range.
-
-## Prerequisites
-
-- An active Azure Subscription
-- Azure CLI installed and authenticated (`az login`)
-- Terraform installed
-- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
 ## Azure Authentication (az login)
 
@@ -22,6 +15,13 @@ az login
 ```
 
 This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
+
+## Prerequisites
+
+- An active Azure Subscription
+- Azure CLI installed and authenticated (`az login`)
+- Terraform installed
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
 ## Configuration Files
 

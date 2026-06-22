@@ -2,7 +2,7 @@
 
 ## Objective
 
-Deploy an Azure Windows Virtual Machine using Terraform and store the VM administrator password securely in Azure Key Vault.
+Deploy an **Azure Windows Virtual Machine** using Terraform and store the VM administrator password securely in **Azure Key Vault**.
 
 This folder builds on the Windows VM deployment from earlier modules and introduces secure secret management using Azure Key Vault. Instead of hardcoding the VM administrator password directly in the Terraform configuration, the password is provided through a local `terraform.tfvars` file, stored as a Key Vault secret, and then used during VM provisioning.
 
@@ -16,13 +16,6 @@ This setup includes:
 - Key Vault Secret
 - Windows Virtual Machine
 
-## Prerequisites
-
-- An active Azure Subscription
-- Azure CLI installed and authenticated (`az login`)
-- Terraform installed
-- A local `terraform.tfvars` file created from `terraform.tfvars.example`
-
 ## Azure Authentication (az login)
 
 Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.), this project uses the Azure CLI session:
@@ -32,6 +25,13 @@ az login
 ```
 
 This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
+
+## Prerequisites
+
+- An active Azure Subscription
+- Azure CLI installed and authenticated (`az login`)
+- Terraform installed
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
 ## Configuration Files
 
@@ -110,9 +110,3 @@ terraform output
 8. Confirm that the output includes:
    - Key Vault name
    - Key Vault secret name
-
-## Security Note
-
-The VM administrator password is still supplied locally through `terraform.tfvars`, but the file is excluded from GitHub. Terraform stores that value as a secret in Azure Key Vault and uses the Key Vault secret value during VM provisioning.
-
-This module demonstrates how Azure Key Vault can be used to centralize and manage sensitive values instead of hardcoding them directly in Terraform resource blocks.
