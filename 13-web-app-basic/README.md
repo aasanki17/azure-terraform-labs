@@ -1,21 +1,19 @@
-# 13 - Azure Web App (Windows)
+# 13 - Azure Basic Windows Web App
 
 ## Objective
 
-Provision a basic **Azure Web App (Windows)** using Terraform, including:
+Deploy a basic **Azure Windows Web App** using Terraform.
 
-- Azure Resource Group
+This module creates a simple Azure App Service environment using a Windows App Service Plan and a Windows Web App. It demonstrates deployment of a Platform-as-a-Service (PaaS) web application in Azure with minimal configuration.
+
+This setup includes:
+
+- Resource Group
 - Azure App Service Plan
 - Azure Windows Web App
+- Random suffix for globally unique Web App naming
 
-This setup demonstrates how to launch an App Service **Platform-as-a-Service (PaaS)** web app with minimal configuration.
-
-## Prerequisites
-
-- An active Azure Subscription
-- Azure CLI installed and authenticated (`az login`)
-- Terraform installed
-- An optional `terraform.tfvars` file (excluded via `.gitignore`) for custom values
+The Web App uses the default Azure App Service landing page. No custom application code is deployed in this lab.
 
 ## Azure Authentication (az login)
 
@@ -25,25 +23,26 @@ Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.)
 az login
 ```
 
-This allows Terraform to authenticate securely without passing client_id, client_secret, or tenant_id.
+This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
 
-## Variable Configuration
+## Prerequisites
 
-This project uses two files to manage variables:
+- An active Azure Subscription
+- Azure CLI installed and authenticated (`az login`)
+- Terraform installed
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
 
-`variables.tf` — defines expected inputs
-`terraform.tfvars` — supplies input values
+## Configuration Files
 
-Example terraform.tfvars:
+This folder uses separate Terraform files to keep the configuration organized:
 
-```hcl
-var_location            = "West Europe"
-var_resource_group_name = "terraformrg"
-var_service_plan_name   = "terraformserviceplan"
-var_web_app_name        = "terraformwebapp"
-```
+- `variables.tf` — defines the input variables used by the configuration
+- `terraform.tfvars.example` — provides a safe template for required variable values
+- `terraform.tfvars` — stores local values used during deployment and is excluded from GitHub
 
-Terraform will automatically detect and use this file if it's named terraform.tfvars.
+Create a local `terraform.tfvars` file from `terraform.tfvars.example`, then update values if needed.
+
+The actual `terraform.tfvars` file is not committed because it can contain environment-specific values.
 
 ## Deployment Steps
 
@@ -59,7 +58,7 @@ Preview configuration before deployment:
 terraform plan -var-file="terraform.tfvars"
 ```
 
-To deploy the Azure Web App (Windows):
+Deploy the Windows Web App:
 
 ```bash
 terraform apply -var-file="terraform.tfvars"
@@ -71,12 +70,35 @@ To destroy all resources:
 terraform destroy -var-file="terraform.tfvars"
 ```
 
-## After Deployment
+## Validation
 
-After deployment, retrieve the Web App URL from Terraform output or Azure Portal.
+After deployment, verify the following in the Azure Portal:
 
-Access the application in your browser:
+1. Open the Resource Group created by this lab.
 
-`https://<web-app-name>.azurewebsites.net`
+2. Confirm that the following resources exist:
+   - App Service Plan
+   - App Service / Web App
+
+3. Open the App Service Plan.
+
+4. Confirm:
+   - Operating System: Windows
+   - Pricing tier / SKU: B1
+
+5. Open the Web App.
+
+6. Confirm:
+   - Status: Running
+   - App Service Plan is linked correctly
+   - Default domain is available
+
+7. Copy the default domain or open the Web App URL.
+
+The URL will look similar to:
+
+```text
+https://app-aztf-13-<random-suffix>.azurewebsites.net
+```
 
 You should see the default Azure App Service landing page.

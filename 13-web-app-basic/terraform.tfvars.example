@@ -1,0 +1,4 @@
+location            = "Southeast Asia"
+resource_group_name = "rg-aztf-13"
+service_plan_name   = "asp-aztf-13"
+web_app_name        = "app-aztf-13"
