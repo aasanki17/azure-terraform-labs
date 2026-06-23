@@ -1,21 +1,17 @@
-# 15 - Azure MSSQL Database
+# 15 - Azure SQL Database
 
 ## Objective
 
-Provision a **fully managed Azure SQL Database (PaaS)** using Terraform. This project includes:
+Provision a **fully managed Azure SQL Database** using Terraform and configure a SQL Server firewall rule for controlled client access.
 
-- SQL Server
-- SQL Database
-- SQL Server firewall rule for controlled access
+This module demonstrates deployment of a Platform-as-a-Service (PaaS) relational database in Azure without managing virtual machines.
 
-This setup demonstrates how to deploy a secure, scalable, and production-ready relational database without managing virtual machines.
+This setup includes:
 
-## Prerequisites
-
-- An active Azure Subscription
-- Azure CLI installed and authenticated (`az login`)
-- Terraform installed
-- An optional `terraform.tfvars` file (excluded via `.gitignore`) for custom values
+- Resource Group
+- Azure SQL Server
+- Azure SQL Database
+- SQL Server firewall rule for client IP access
 
 ## Azure Authentication (az login)
 
@@ -25,52 +21,45 @@ Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.)
 az login
 ```
 
-This allows Terraform to authenticate securely without passing client_id, client_secret, or tenant_id.
+This allows Terraform to authenticate securely without passing `client_id`, `client_secret`, or `tenant_id` in the provider block.
 
-## Variable Configuration
+## Prerequisites
 
-This project uses two files to manage variables:
+- An active Azure Subscription
+- Azure CLI installed and authenticated (`az login`)
+- Terraform installed
+- A local `terraform.tfvars` file created from `terraform.tfvars.example`
+- Your current public IP address for SQL firewall access
 
-`variables.tf` — defines expected inputs
-`terraform.tfvars` — supplies input values
+## Configuration Files
 
-Example terraform.tfvars:
+This folder uses separate Terraform files to keep the configuration organized:
+
+- `variables.tf` — defines the input variables used by the configuration
+- `terraform.tfvars.example` — provides a safe template for required variable values
+- `terraform.tfvars` — stores local values used during deployment and is excluded from GitHub
+
+Create a local `terraform.tfvars` file from `terraform.tfvars.example`, then update the SQL administrator password and allowed client IP address.
+
+The actual `terraform.tfvars` file is not committed because it contains sensitive values such as the SQL administrator password and environment-specific values such as your public IP address.
+
+## Firewall Configuration
+
+Azure SQL Server blocks external connections by default.
+
+This lab creates a firewall rule that allows access only from the client IP address provided in:
 
 ```hcl
-var_location             = "North Europe"
-var_resource_group_name  = "terraformrg"
-var_mssql_server_name    = "terraformsqlserver"
-var_mssql_db_name        = "terraformsqldb"
-var_mssql_admin_username = "sqladminuser"
-var_mssql_admin_password = "<YOUR_STRONG_PASSWORD>"
-var_allowed_ip           = "<YOUR_IP_ADDRESS>"
+allowed_client_ip = "x.x.x.x"
 ```
 
-Terraform will automatically detect and use this file if it's named terraform.tfvars.
+Use your current public IP address for this value.
 
-## Firewall
-
-A firewall rule is required to allow connections to the SQL Server. Without a firewall rule, all connections are blocked by default.
-
-_Current Configuration_
-
-The example here allows access from a specific IP address (<YOUR_IP_ADDRESS>).
+You can find your public IP address by running:
 
 ```bash
-start_ip_address = "0.0.0.0"
-end_ip_address   = "0.0.0.0"
+curl ifconfig.me
 ```
-
-_Allowing Azure Services (Optional)_
-
-To allow Azure services (e.g., Web Apps, Azure DevOps) to connect:
-
-```bash
-start_ip_address = "0.0.0.0"
-end_ip_address   = "0.0.0.0"
-```
-
-Note: 0.0.0.0 does not mean “open to the internet”. It allows only trusted Azure services.
 
 ## Deployment Steps
 
@@ -86,7 +75,7 @@ Preview configuration before deployment:
 terraform plan -var-file="terraform.tfvars"
 ```
 
-To deploy the MSSQL Database:
+Deploy the Azure SQL Server, SQL Database, and firewall rule:
 
 ```bash
 terraform apply -var-file="terraform.tfvars"
@@ -98,35 +87,47 @@ To destroy all resources:
 terraform destroy -var-file="terraform.tfvars"
 ```
 
-If destruction fails, ensure the prevent_destroy lifecycle block is removed from the database resource.
+## Validation
 
-## Validate the Deployment
+After deployment, verify the following in the Azure Portal:
 
-1. Go to the Azure Portal > Resource Group
-   Confirm that:
+1. Open the Resource Group created by this lab.
 
-   - The SQL Server exists
-   - The SQL Database exists under the server
+2. Confirm that the following resources exist:
+   - Azure SQL Server
+   - Azure SQL Database
 
-2. Test Database Connectivity
-   Use Visual Studio Code with the MSSQL extension.
+3. Open the Azure SQL Server.
 
-   i) Open Command Palette:
+4. Go to:
 
-   ```
-   Cmd + Shift + P → MS SQL: Connect
-   ```
+```text
+Networking → Firewall rules
+```
 
-   ii) Provide:
+5. Confirm that the firewall rule exists:
+   - `allow-client-ip`
 
-   - Server: <sql-server-name>.database.windows.net
-   - Authentication: SQL Login
-   - Username: SQL admin username
-   - Database: SQL database name
+6. Confirm that the firewall rule uses your public IP address.
 
-   Successful output confirms connectivity.
+7. Open the Azure SQL Database.
 
-   iv) Firewall Validation
+8. Confirm:
+   - Status: Online
+   - Pricing tier / SKU: Basic
+   - Server is linked correctly
 
-   - Ensure your client IP is allowed in SQL Server firewall rules
-   - Firewall changes may take a few minutes to apply
+9. Test database connectivity using Visual Studio Code with the MSSQL extension or another SQL client.
+
+Connection format:
+
+```text
+<sql-server-name>.database.windows.net
+```
+
+Use:
+
+- Authentication: SQL Login
+- Username: value of `mssql_admin_username`
+- Password: value of `mssql_admin_password`
+- Database: value of `mssql_database_name`
