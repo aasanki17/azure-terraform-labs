@@ -1,0 +1,7 @@
+location              = "Southeast Asia"
+resource_group_name   = "rg-aztf-15"
+mssql_server_name     = "sql-aztf-15"
+mssql_database_name   = "sqldb-aztf-15"
+mssql_admin_username  = "aztfadmin"
+mssql_admin_password  = "<YOUR_STRONG_SQL_PASSWORD>"
+allowed_client_ip     = "x.x.x.x"

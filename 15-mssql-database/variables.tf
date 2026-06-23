@@ -1,36 +1,36 @@
 # Resource Configuration Variables
-variable "var_location" {
+variable "location" {
   type        = string
-  description = "Azure region"
+  description = "Azure region where resources will be deployed"
 }
 
-variable "var_resource_group_name" {
+variable "resource_group_name" {
   type        = string
   description = "Name of the Azure Resource Group"
 }
 
-variable "var_mssql_server_name" {
+variable "mssql_server_name" {
   type        = string
-  description = "Base name of the Azure SQL Server (a random suffix is added for global uniqueness)"
+  description = "Base name of the Azure SQL Server. A random suffix is added for global uniqueness"
 }
 
-variable "var_mssql_db_name" {
+variable "mssql_database_name" {
   type        = string
   description = "Name of the Azure SQL Database"
 }
 
-variable "var_mssql_admin_username" {
+variable "mssql_admin_username" {
   type        = string
-  description = "Administrator username for the SQL Server"
+  description = "Administrator username for the Azure SQL Server"
 }
 
-variable "var_mssql_admin_password" {
+variable "mssql_admin_password" {
   type        = string
-  description = "Administrator password for the SQL Server"
+  description = "Administrator password for the Azure SQL Server"
   sensitive   = true
 }
 
-variable "var_allowed_ip" {
-  description = "Client IP allowed to access SQL Server"
+variable "allowed_client_ip" {
   type        = string
+  description = "Client public IP address allowed to access the Azure SQL Server"
 }

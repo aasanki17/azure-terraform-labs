@@ -174,8 +174,8 @@ azure-terraform-labs/
 ├── 15-mssql-database/                         # Provision Azure SQL Server and Database with firewall rule
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars
 │   ├── main.tf
+│   ├── terraform.tfvars.example
 │   └── README.md
 │
 ├── 16-webapp-mssql/                           # Web App executes a Blob-hosted SQL script to populate Azure SQL Database
