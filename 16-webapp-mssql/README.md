@@ -1,78 +1,86 @@
-# 16 - Azure Web App with SQL Database and Blob hosted Execution
+# 16 - Azure Web App with SQL Database and Blob-Based SQL Script
 
 ## Objective
 
-Provision a **Windows Azure Web App** connected to an **Azure SQL Database**, and automatically load data into the database via a **PowerShell script** file stored in **Azure Blob Storage**.
+Deploy an Azure Windows Web App connected to an Azure SQL Database, upload a SQL seed script to Azure Blob Storage, and initialize the database using Terraform with local sqlcmd execution.
 
-This setup demonstrates how to:
+This module demonstrates how Azure App Service, Azure SQL Database, Azure Storage, Blob upload, SQL firewall rules, and GitHub-based deployment can be connected using Terraform.
 
-- Use Terraform to manage Azure infrastructure.
-- Automate database setup via a script hosted in blob storage.
-- Securely inject connection strings and credentials into the web app.
-- Link GitHub source control for CI/CD-style deployment.
+This setup includes:
 
-## Prerequisites
+- Resource Group
+- Azure Storage Account
+- Azure Storage Container
+- SQL script uploaded as a Blob
+- Read-only SAS token for the SQL script
+- Azure SQL Server
+- Azure SQL Database
+- SQL Server firewall rule for client IP access
+- Azure App Service Plan
+- Azure Windows Web App
+- Web App SQL connection string
+- Database initialization using sqlcmd during terraform apply
+- GitHub-based source control deployment
 
-- An active Azure Subscription
-- Azure CLI installed and authenticated (`az login`)
-- Terraform installed
-- GitHub repository containing this project
-- An optional `terraform.tfvars` file (excluded via `.gitignore`) for custom values
+## Azure Authentication
 
-## Azure Authentication (az login)
-
-Instead of hardcoding sensitive credentials (`client_id`, `client_secret`, etc.), this project uses the Azure CLI session:
+This project uses Azure CLI authentication:
 
 ```bash
 az login
 ```
 
-This allows Terraform to authenticate securely without passing client_id, client_secret, or tenant_id.
+Terraform uses the active Azure CLI session, so no Azure client secret is stored in the Terraform files.
 
-## Variable Configuration
+## Prerequisites
 
-This project uses two files to manage variables:
+- Active Azure subscription
+- Azure CLI installed and authenticated
+- Terraform installed
+- sqlcmd installed locally
+- GitHub repository for Web App deployment
+- GitHub Personal Access Token
+- Current public IP address for SQL firewall access
+- Local terraform.tfvars file created from terraform.tfvars.example
 
-`variables.tf` — defines expected inputs
-`terraform.tfvars` — supplies input values
-`terraform.tfvars.example` — shows sample values without exposing real secrets or personal configuration
+## Firewall Configuration
 
-Example terraform.tfvars:
+Azure SQL Server blocks external connections by default.
+
+This lab creates a firewall rule that allows access only from the client IP address provided in:
 
 ```hcl
-var_location               = "West Europe"
-var_resource_group_name    = "terraformrg"
-var_storage_account_name   = "terraformsa"
-var_storage_container_name = "terraformcontainer"
-var_storage_blob_name      = "terraformcontainerblob"
-var_mssql_server_name      = "terraformsqlserver"
-var_mssql_db_name          = "terraformsqldb"
-var_mssql_admin_username   = "sqladminuser"
-var_mssql_admin_password   = "A-Strong-Pa$$w0rd"
-var_allowed_ip             = "x.x.x.x"
-var_service_plan_name      = "terraformserviceplan"
-var_web_app_name           = "terraformwebapp"
-var_github_token           = "<YOUR_GITHUB_PAT>"
-var_github_repo_url       = "https://github.com/your-username/your-repo"
-var_github_branch         = "main"
+allowed_client_ip = "x.x.x.x"
 ```
 
-Terraform will automatically detect and use this file if it's named terraform.tfvars.
+Use your current public IP address for this value.
 
-The actual `terraform.tfvars` file is not committed because it can contain sensitive or personal values. A `terraform.tfvars.example` file is included to show which values are required.
+You can find your public IP address by running:
+
+```bash
+curl ifconfig.me
+```
+
+## Configuration Files
+
+- variables.tf — defines input variables
+- outputs.tf — displays useful deployment values
+- terraform.tfvars.example — safe sample variable file
+- terraform.tfvars — local values file, excluded from GitHub
+- load-data.sql — creates and populates the sample SQL table
 
 ## How It Works
 
-1. SQL Script Upload: load-data.sql is uploaded to a private blob container.
-2. SAS Token: A 24-hour temporary SAS token is generated to securely access the blob.
-3. Web App:
-   - Uses `powershell|7` runtime.
-   - Executes `load-db.ps1` on startup.
-   - Downloads SQL script via SAS URL.
-   - Executes it using `sqlcmd` to populate the database.
-4. Database:
-   - Secure credentials passed via environment variables and connection_string.
-   - `prevent_destroy = true` ensures production safety.
+1. Terraform creates a Resource Group.
+2. Terraform creates a Storage Account and private Storage Container.
+3. Terraform uploads load-data.sql to the private container.
+4. Terraform generates a temporary read-only SAS token for the SQL script.
+5. Terraform creates an Azure SQL Server and Azure SQL Database.
+6. Terraform creates a SQL firewall rule for the configured client IP.
+7. Terraform runs load-data.sql locally using sqlcmd to create and populate the Inventory table.
+8. Terraform creates a Windows App Service Plan and Windows Web App.
+9. Terraform adds a SQL connection string to the Web App.
+10. Terraform connects the Web App to the GitHub repository.
 
 ## Deployment Steps
 
@@ -82,50 +90,76 @@ Initialize Terraform:
 terraform init
 ```
 
-Preview configuration before deployment:
+Preview the deployment:
 
 ```bash
 terraform plan -var-file="terraform.tfvars"
 ```
 
-To deploy a Web App connected to an Azure SQL Database and populate it using a script from Blob Storage:
+Deploy the resources:
 
 ```bash
 terraform apply -var-file="terraform.tfvars"
 ```
 
-To destroy all resources:
+View outputs:
+
+```bash
+terraform output
+```
+
+Destroy the resources:
 
 ```bash
 terraform destroy -var-file="terraform.tfvars"
 ```
 
-## After Deployment
+## Validation
 
-1. Once deployed, visit your live Web App at:
+After deployment, check these resources in Azure Portal:
 
-`https://<your-web-app-name>.azurewebsites.net`
+1. Resource Group
+2. Storage Account
+3. Storage Container
+4. Uploaded load-data.sql Blob
+5. Azure SQL Server
+6. Azure SQL Database
+7. SQL firewall rule named allow-client-ip
+8. App Service Plan
+9. Windows Web App
+10. Web App SQL connection string
+11. Deployment Center connected to GitHub
 
-2. Validate database:
-   - Connect via VS Code (MSSQL extension)
-   - Confirm Inventory table exists and is populated
+The Web App should contain the SQL connection string:
 
-3. Monitor execution:
+```text
+SqlDatabase
+```
 
-Azure Portal → Web App → Log stream
+Check the database using VS Code with the MSSQL extension or sqlcmd:
 
-## Outputs
+```sql
+SELECT *
+FROM dbo.Inventory;
+```
 
-After deployment, Terraform shows:
+Expected rows:
 
-- `web_app_url` - URL of the deployed Azure Web App
-- `sql_server_fqdn` - SQL Server fully qualified domain name
-- `storage_account_name` - Storage account used for the SQL script
+```text
+ProductID  ProductName  Quantity
+1          Mobile       100
+2          Laptop       200
+3          Headphones   300
+```
 
-## Security Note
+You can also validate from the terminal using sqlcmd:
 
-This lab passes SQL connection details to the Web App using app settings and a connection string. This is acceptable for a learning lab, but in a real production setup I would use stronger secret management, such as Key Vault references or managed identity where possible.
-
-The SQL firewall rule is controlled through a variable, so the client IP is not hardcoded in the Terraform file.
-
-The SAS token generated for the SQL script is temporary and read-only.
+```bash
+sqlcmd \
+  -S "$(terraform output -raw sql_server_fqdn)" \
+  -d "sqldb-aztf-16" \
+  -U "aztfadmin" \
+  -P "$(grep mssql_admin_password terraform.tfvars | cut -d'"' -f2)" \
+  -Q "SELECT * FROM dbo.Inventory;" \
+  -C
+```

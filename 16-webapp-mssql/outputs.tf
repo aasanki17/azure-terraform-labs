@@ -1,5 +1,5 @@
 output "web_app_url" {
-  description = "Default URL of the Azure Web App"
+  description = "Default URL of the Azure Windows Web App"
   value       = "https://${azurerm_windows_web_app.web_app.default_hostname}"
 }
 
@@ -9,6 +9,6 @@ output "sql_server_fqdn" {
 }
 
 output "storage_account_name" {
-  description = "Name of the storage account used to store the SQL script"
+  description = "Name of the Azure Storage Account used to store the SQL script"
   value       = azurerm_storage_account.storage_account.name
 }

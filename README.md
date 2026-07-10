@@ -178,14 +178,20 @@ azure-terraform-labs/
 │   ├── terraform.tfvars.example
 │   └── README.md
 │
-├── 16-webapp-mssql/                           # Web App executes a Blob-hosted SQL script to populate Azure SQL Database
+├── 16-webapp-mssql/                            # Web App connected to Azure SQL Database with SQL initialization using sqlcmd
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── main.tf
 │   ├── outputs.tf
 │   ├── terraform.tfvars.example
 │   ├── load-data.sql
-│   ├── load-db.ps1
+│   └── README.md
+│
+├── 17-azure-bastion/                          # Securely access a private Windows VM using Azure Bastion
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── main.tf
+│   ├── terraform.tfvars.example
 │   └── README.md
 │
 ├── .gitignore

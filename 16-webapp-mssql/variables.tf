@@ -1,81 +1,75 @@
-# Azure Region and Resource Names
-variable "var_location" {
+# Resource Configuration Variables
+variable "location" {
   type        = string
-  description = "Azure region"
+  description = "Azure region where resources will be deployed"
 }
 
-variable "var_resource_group_name" {
+variable "resource_group_name" {
   type        = string
   description = "Name of the Azure Resource Group"
 }
 
-# Storage Account Variables
-variable "var_storage_account_name" {
+# Storage Configuration Variables
+variable "storage_account_name" {
   type        = string
-  description = "Base name of the Storage Account (a random suffix is added for global uniqueness)"
+  description = "Base name of the Azure Storage Account. A random suffix is added for global uniqueness"
 }
 
-variable "var_storage_container_name" {
+variable "storage_container_name" {
   type        = string
-  description = "Name of the Storage Container"
+  description = "Name of the Azure Storage Container used to store the SQL script"
 }
 
-variable "var_storage_blob_name" {
+variable "storage_blob_name" {
   type        = string
-  description = "Name of the Storage Blob"
+  description = "Name of the SQL script blob uploaded to Azure Storage"
 }
 
-# MSSQL Variables
-variable "var_mssql_server_name" {
+# Azure SQL Configuration Variables
+variable "mssql_server_name" {
   type        = string
-  description = "Base name of the Azure SQL Server (a random suffix is added for global uniqueness)"
+  description = "Base name of the Azure SQL Server. A random suffix is added for global uniqueness"
 }
 
-variable "var_mssql_db_name" {
+variable "mssql_database_name" {
   type        = string
   description = "Name of the Azure SQL Database"
 }
 
-variable "var_mssql_admin_username" {
+variable "mssql_admin_username" {
   type        = string
-  description = "Administrator username for SQL Server"
+  description = "Administrator username for the Azure SQL Server"
 }
 
-variable "var_mssql_admin_password" {
+variable "mssql_admin_password" {
   type        = string
-  description = "Administrator password for SQL Server"
+  description = "Administrator password for the Azure SQL Server"
   sensitive   = true
 }
 
-variable "var_allowed_ip" {
-  description = "Client public IP allowed to access Azure SQL Server"
+variable "allowed_client_ip" {
   type        = string
+  description = "Client public IP address allowed to access the Azure SQL Server"
 }
 
-# Web App Variables
-variable "var_service_plan_name" {
+# Web App Configuration Variables
+variable "service_plan_name" {
   type        = string
-  description = "Name of the Azure App Service plan"
+  description = "Name of the Azure App Service Plan"
 }
 
-variable "var_web_app_name" {
+variable "web_app_name" {
   type        = string
-  description = "Base name for the Azure Windows Web App (a random suffix is added for global uniqueness)"
+  description = "Base name for the Azure Windows Web App. A random suffix is added for global uniqueness"
 }
 
-variable "var_github_token" {
+variable "github_repository_url" {
   type        = string
-  description = "GitHub Personal Access Token (PAT) used by Azure App Service to access the repository"
+  description = "GitHub repository URL used as the deployment source for the Web App"
+}
+
+variable "github_token" {
+  type        = string
+  description = "GitHub Personal Access Token used by Azure App Service to access the repository"
   sensitive   = true
-}
-
-variable "var_github_repo_url" {
-  type        = string
-  description = "GitHub repository URL used for Azure App Service deployment"
-}
-
-variable "var_github_branch" {
-  type        = string
-  description = "GitHub branch used for Azure App Service deployment"
-  default     = "main"
 }
