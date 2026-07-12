@@ -1,0 +1,32 @@
+location                    = "Southeast Asia"
+resource_group_name         = "rg-aztf-18"
+virtual_network_name        = "vnet-aztf-18"
+subnet_name                 = "snet-aztf-18-01"
+network_security_group_name = "nsg-aztf-18"
+
+storage_account_name   = "staztf18demo01"
+storage_container_name = "scripts"
+storage_blob_name      = "IIS_Config.ps1"
+
+public_ip_name                 = "pip-aztf-18"
+load_balancer_name             = "lb-aztf-18"
+frontend_ip_configuration_name = "feip-aztf-18"
+backend_pool_name              = "bpool-aztf-18"
+health_probe_name              = "probe-http-aztf-18"
+load_balancing_rule_name       = "rule-http-aztf-18"
+
+network_interface_name_1 = "nic-aztf-18-01"
+network_interface_name_2 = "nic-aztf-18-02"
+ip_configuration_name_1  = "ipconfig-aztf-18-01"
+ip_configuration_name_2  = "ipconfig-aztf-18-02"
+
+windows_vm_name_1 = "vm-aztf-18-win1"
+windows_vm_name_2 = "vm-aztf-18-win2"
+os_disk_name_1    = "osdisk-vm-aztf-18-win-01"
+os_disk_name_2    = "osdisk-vm-aztf-18-win-02"
+
+vm_extension_name_1 = "vmext-iis-aztf-18-01"
+vm_extension_name_2 = "vmext-iis-aztf-18-02"
+
+admin_username = "aztfadmin"
+admin_password = "<YOUR_STRONG_PASSWORD>"

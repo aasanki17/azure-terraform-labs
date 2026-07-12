@@ -194,6 +194,15 @@ azure-terraform-labs/
 │   ├── terraform.tfvars.example
 │   └── README.md
 │
+├── 18-load-balancer/                          # Distribute HTTP traffic across two Windows VMs using Azure Load Balancer
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── terraform.tfvars.example
+│   ├── IIS_Config.ps1
+│   └── README.md
+│
 ├── .gitignore
 └── README.md                                  # Root Documentation for the Repository
 ```
