@@ -178,7 +178,7 @@ azure-terraform-labs/
 │   ├── terraform.tfvars.example
 │   └── README.md
 │
-├── 16-webapp-mssql/                            # Web App connected to Azure SQL Database with SQL initialization using sqlcmd
+├── 16-webapp-mssql/                           # Web App connected to Azure SQL Database with SQL initialization using sqlcmd
 │   ├── provider.tf
 │   ├── variables.tf
 │   ├── main.tf
