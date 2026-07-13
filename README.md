@@ -203,6 +203,14 @@ azure-terraform-labs/
 │   ├── IIS_Config.ps1
 │   └── README.md
 │
+├── 19-dns-zone/                               # Map a DNS record to a Load Balancer-backed web endpoint using Azure DNS
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── terraform.tfvars.example
+│   └── README.md
+│
 ├── .gitignore
 └── README.md                                  # Root Documentation for the Repository
 ```
