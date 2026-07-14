@@ -1,0 +1,26 @@
+location               = "Southeast Asia"
+resource_group_name    = "rg-aztf-20"
+storage_account_name   = "staztf20demo"
+storage_container_name = "scripts"
+storage_blob_name      = "IIS_Config.ps1"
+
+virtual_network_name        = "vnet-aztf-20"
+subnet_name                 = "snet-aztf-20-01"
+network_security_group_name = "nsg-aztf-20"
+
+public_ip_name                 = "pip-aztf-20"
+load_balancer_name             = "lb-aztf-20"
+frontend_ip_configuration_name = "feip-aztf-20"
+backend_pool_name              = "bpool-aztf-20"
+health_probe_name              = "probe-http-aztf-20"
+load_balancing_rule_name       = "rule-http-aztf-20"
+outbound_rule_name             = "outrule-aztf-20"
+
+vmss_name                   = "vmssazt20"
+vmss_network_interface_name = "nic-vmss-aztf-20"
+vmss_ip_configuration_name  = "ipconfig-vmss-aztf-20"
+vmss_extension_name         = "vmext-iis-aztf-20"
+autoscale_setting_name      = "autoscale-aztf-20"
+
+admin_username = "aztfadmin"
+admin_password = "<YOUR_STRONG_PASSWORD>"

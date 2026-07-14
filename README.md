@@ -211,6 +211,15 @@ azure-terraform-labs/
 │   ├── terraform.tfvars.example
 │   └── README.md
 │
+├── 20-vm-scale-set/                           # Deploy a Windows VM Scale Set with Load Balancer, IIS, and autoscaling
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── terraform.tfvars.example
+│   ├── IIS_Config.ps1
+│   └── README.md
+│
 ├── .gitignore
 └── README.md                                  # Root Documentation for the Repository
 ```
